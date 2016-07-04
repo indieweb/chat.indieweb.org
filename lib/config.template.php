@@ -10,6 +10,8 @@ class Config {
 
   public static $secret = '';
 
+  public static $slack_token = 'xoxp-...';
+
   public static function base_url_for_channel($channel) {
     if($channel == '#indiewebcamp' || $channel == '#indieweb')
       return Config::$base;
