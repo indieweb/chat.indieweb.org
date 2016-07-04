@@ -1,0 +1,110 @@
+  body {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+  }
+  a.time {
+    color: #999;
+  }
+  a.hash {
+      color: #BBB;
+      text-decoration: none;
+  }
+  .line {
+    min-height: 22px;
+    margin-bottom: 4px;
+  }
+  .msg-join, .msg-join a {
+    color: #bbb;
+  }
+  .msg-wiki, .msg-wiki a, .msg-wiki a.author {
+    color: #7e3db4;
+  }
+  .msg-twitter.retweet {
+    opacity: 0.5;
+  }
+  .msg-twitter, .msg-twitter a {
+    color: #2087e1;
+  }
+  a {
+    color: #222299;
+  }
+  .nick, a.author {
+    color: #a13d3d;
+  }
+  .msg-twitter a.author {
+    color: #2087e1;
+  }
+  .author {
+    font-weight: bold;
+  }
+  .avatar {
+    margin-right: 3px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: inline-block;
+  }
+  .avatar img {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    vertical-align: middle;
+  }
+  
+  .clear {
+    clear: both;
+  }
+  
+  .logs {
+    padding: 10px;
+  }
+  
+  .hilite {
+    background-color: #fffdd0;
+  }
+  
+  .skip {
+    margin-bottom: 12px;
+  }
+  #bottom {
+    margin-top: 12px;
+  }
+  
+  @media (max-width: 640px) {
+    body {
+      width: 100%;
+      font-size: 12px;
+    }
+    .line {
+      margin-bottom: 4px;
+    }
+    .avatar img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  
+  .line:hover {
+      background-color: #fffdeb;
+  }
+  
+  .featured {
+    font-size: 130%;
+    margin: 20px 0;
+  }
+  
+  .spam {
+    color:lightgrey; 
+    font-size: x-small;
+    max-width:100%; 
+    overflow:hidden; 
+    text-overflow:ellipsis;
+    margin-bottom: 1px;
+    white-space: nowrap;
+    min-height: 10px;
+    opacity: 0.5;
+  }
+  .spam .avatar img {
+    height: 10px;
+  }

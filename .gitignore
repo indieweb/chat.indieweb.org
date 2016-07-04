@@ -1,0 +1,5 @@
+.DS_Store
+data/
+vendor/
+lib/config.php
+public/avatars/

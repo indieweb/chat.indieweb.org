@@ -1,0 +1,10 @@
+{
+  "require": {
+    "p3k/quartz-db": "^0.1.2",
+    "j4mie/idiorm": "^1.5",
+    "mf2/mf2": "*",
+    "guzzlehttp/guzzle": "~6.0",
+    "eventviva/php-image-resize": "1.5.*",
+    "predis/predis": "^1.1"
+  }
+}
