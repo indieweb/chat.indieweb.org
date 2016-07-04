@@ -57,13 +57,19 @@ if($channel == '#indieweb')
 else
   $query_channels = $channel;
 
-$logs = ORM::for_table('irclog')
-  ->where_in('channel', $query_channels)
-  ->where_gt('timestamp', $start_utc->format('U')*1000)
-  ->where_lt('timestamp', $end_utc->format('U')*1000)
-  ->where('hide', 0)
-  ->order_by_asc('timestamp')
-  ->find_many();
+
+if($channel == '#indieweb')
+  $query_channels = '"#indieweb","#indiewebcamp"';
+else
+  $query_channels = '"'.$channel.'"';
+
+$logs = db()->prepare('SELECT * FROM irclog 
+  WHERE channel IN ('.$query_channels.')
+  AND timestamp >= :min AND timestamp < :max AND hide=0 
+  ORDER BY timestamp');
+$logs->bindValue(':min', $start_utc->format('U')*1000);
+$logs->bindValue(':max', $end_utc->format('U')*1000);
+$logs->execute();
 
 
 
@@ -79,7 +85,7 @@ include('templates/header-bar.php');
     // foreach($results as $line) {
     //   echo format_line($channel, $line->date, $tz, $line->data);
     // }
-    foreach($logs as $row) {
+	while($row=$logs->fetch(PDO::FETCH_OBJ)) {
       $date = DateTime::createFromFormat('U.u', $row->timestamp/1000);
       echo format_line($channel, $date, $tz, db_row_to_new_log($row));
     }

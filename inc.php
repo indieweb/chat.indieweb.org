@@ -8,10 +8,14 @@ require_once('lib/php_calendar.php');
 require_once('lib/format.php');
 require_once('lib/config.php');
 
-ORM::configure('mysql:host='.Config::$dbhost.';dbname='.Config::$dbname.';charset=utf8');
-ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
-ORM::configure('username', Config::$dbuser);
-ORM::configure('password', Config::$dbpass);
+function db()
+{
+	static $db;
+	if(!isset($db)) {
+	    $db = new PDO('mysql:host='.Config::$dbhost.';dbname='.Config::$dbname.'', Config::$dbuser, Config::$dbpass);
+	}
+	return $db;
+}
 
 function db_row_to_new_log($row) {
   $date = DateTime::createFromFormat('U.u', floor($row->timestamp/1000).'.'.sprintf('%06d',1000*($row->timestamp%1000)));
