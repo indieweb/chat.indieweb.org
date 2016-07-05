@@ -38,6 +38,11 @@ if($channel != '#indieweb' && $start->format('U') < 1467615600) $yesterday = fal
 
 
 
+$channelName = $channel;
+if($start->format('U') < 1467615600 && $channelName == '#indieweb') $channelName = '#indiewebcamp';
+
+
+
 if($channel == '#indieweb')
   $query_channels = ['#indieweb','#indiewebcamp'];
 else

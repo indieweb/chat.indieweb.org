@@ -2,7 +2,7 @@
 
   <a class="item" href="https://indieweb.org/"><img src="/assets/indiewebcamp.svg" class="logo"></a>
 
-  <a class="item" href="<?= $channel_link ?>"><?= $channel ?></a>
+  <a class="item" href="<?= $channel_link ?>"><?= $channelName ?></a>
   <a class="item" href="<?= $channel_link ?><?= $date->format('Y-m-d') ?>"><?= $dateTitle ?></a>
 
   <ul class="right">
