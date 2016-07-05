@@ -16,6 +16,13 @@ class Config {
     if($channel == '#indiewebcamp' || $channel == '#indieweb')
       return Config::$base;
     else
-      return Config::$base . trim($channel,'#') . '/';
+      return Config::$base . str_replace('indieweb-','',trim($channel,'#')) . '/';
+  }
+
+  public static function irc_channel_for_slug($slug) {
+    if($slug == '')
+      return '#indieweb';
+    else
+      return '#indieweb-'.$slug;
   }
 }

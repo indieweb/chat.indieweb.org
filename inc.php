@@ -8,8 +8,7 @@ require_once('lib/php_calendar.php');
 require_once('lib/format.php');
 require_once('lib/config.php');
 
-function db()
-{
+function db() {
 	static $db;
 	if(!isset($db)) {
 	    $db = new PDO('mysql:host='.Config::$dbhost.';dbname='.Config::$dbname.'', Config::$dbuser, Config::$dbpass);
@@ -87,6 +86,16 @@ class ImageProxy {
 
 }
 
+function getViewerTimezone() {
+  try {
+    $tzname = array_key_exists('timezone_view', $_COOKIE) ? $_COOKIE['timezone_view'] : 'US/Pacific';
+    $tz = new DateTimeZone($tzname);
+  } catch(Exception $e) {
+    $tzname = 'US/Pacific';
+    $tz = new DateTimeZone('US/Pacific');
+  }
+  return [$tzname, $tz];
+}
 
 function filterText($text) {
 	/*
@@ -171,6 +180,25 @@ function loadUsers() {
     	}
   	}
   }
+}
+
+function loadTimezones() {
+  global $users;
+  
+  $timezones = [];
+  foreach($users as $u) {
+    if(property_exists($u->properties, 'tz')) {
+      $t = $u->properties->tz[0];
+      if(!in_array($t, $timezones)) {
+        try {
+          new DateTimeZone($t);
+          $timezones[] = $t;
+        } catch(Exception $e) {}
+      }
+    }
+  }
+  sort($timezones);
+  return $timezones;
 }
 
 function userForNick($nick) {

@@ -34,7 +34,7 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
   $line['type'] = $input->type;
 
   if(preg_match('/^\[\[(?<page>.+)\]\](?: (?<type>[!NM]*|delete|restore|upload|moved))? (?<url>[^ ]+) \* (?<user>[^\*]+) \* (?:\((?<size>[+-]\d+)\))?(?:deleted|restored|moved)?(?<comment>.*)/', $line['content'], $match)) {
-    $line = format_wiki_line($line, $match);
+    $line = format_wiki_line($line, $match, $mf, $blank_avatar);
   }
 
   // Old twitter citations  
@@ -117,7 +117,7 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
   return ob_get_clean();
 }
 
-function format_wiki_line($line, $match) {
+function format_wiki_line($line, $match, $mf, $blank_avatar) {
   // Wiki edits
   $line['type'] = 'wiki';
   $user = userForHost($match['user']);

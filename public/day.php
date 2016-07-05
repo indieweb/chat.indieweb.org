@@ -5,34 +5,17 @@ include('inc.php');
 $permalink = false;
 
 loadUsers();
+$timezones = loadTimezones();
 
 # Get timezone of viewer from cookie
-try {
-  $tzname = array_key_exists('timezone_view', $_COOKIE) ? $_COOKIE['timezone_view'] : 'US/Pacific';
-  $tz = new DateTimeZone($tzname);
-} catch(Exception $e) {
-  $tzname = 'US/Pacific';
-  $tz = new DateTimeZone('US/Pacific');
-}
+list($tzname, $tz) = getViewerTimezone();
 $utc = new DateTimeZone('UTC');
 
-$timezones = []; #DateTimeZone::listIdentifiers(DateTimeZone::UTC | DateTimeZone::AMERICA | DateTimeZone::EUROPE);
-foreach($users as $u) {
-  if(property_exists($u->properties, 'tz')) {
-    $t = $u->properties->tz[0];
-    if(!in_array($t, $timezones)) {
-      try {
-        new DateTimeZone($t);
-        $timezones[] = $t;
-      } catch(Exception $e) {}
-    }
-  }
-}
-sort($timezones);
 
 
 # Get the start/end times for this day
 $start = new DateTime($_GET['date'].' 00:00:00', $tz);
+$date = $start;
 $end = new DateTime($_GET['date'].' 23:59:59', $tz);
 
 $start_utc = new DateTime($_GET['date'].' 00:00:00', $tz);
@@ -55,13 +38,12 @@ if(strtotime($tomorrow) > time()) $tomorrow = false;
 if($channel == '#indieweb')
   $query_channels = ['#indieweb','#indiewebcamp'];
 else
-  $query_channels = $channel;
-
+  $query_channels = [Config::irc_channel_for_slug($_GET['channel'])];
 
 if($channel == '#indieweb')
   $query_channels = '"#indieweb","#indiewebcamp"';
 else
-  $query_channels = '"'.$channel.'"';
+  $query_channels = '"'.Config::irc_channel_for_slug($_GET['channel']).'"';
 
 $logs = db()->prepare('SELECT * FROM irclog 
   WHERE channel IN ('.$query_channels.')
@@ -85,14 +67,35 @@ include('templates/header-bar.php');
     // foreach($results as $line) {
     //   echo format_line($channel, $line->date, $tz, $line->data);
     // }
-	while($row=$logs->fetch(PDO::FETCH_OBJ)) {
-      $date = DateTime::createFromFormat('U.u', $row->timestamp/1000);
+    while($row=$logs->fetch(PDO::FETCH_OBJ)) {
+      $date = DateTime::createFromFormat('U.u', sprintf('%.03f',$row->timestamp/1000));
       echo format_line($channel, $date, $tz, db_row_to_new_log($row));
     }
     ?>
   </div>
   <div id="bottom" class="skip"><a href="#top">jump to top</a></div>
 </div>
+<input id="channel" value="<?= $_GET['channel'] ?>" style="display:none;">
+
+<?php include('templates/footer-bar.php'); ?>
+
+<script type="text/javascript" src="/assets/pushstream.js"></script>
+<script type="text/javascript">
+  if(window.location.hash) {
+    var n = document.getElementById(window.location.hash.replace('#',''));
+    n.classList.add('hilite');
+  }
+  window.addEventListener("hashchange", function(){
+    var n = document.getElementsByClassName('line');
+    Array.prototype.filter.call(n, function(el){ el.classList.remove('hilite') });
+    var n = document.getElementById(window.location.hash.replace('#',''));
+    n.classList.add('hilite');
+  }, false);
+</script>
+<?php if(!array_key_exists('timestamp', $_GET) && isset($date) && date('Y-m-d') == $date): ?>
+<script type="text/javascript" src="/assets/log-streaming.js"></script>
+<?php endif; ?>
+
 <?php
 
 include('templates/footer.php');

@@ -3,6 +3,7 @@
   <a class="item" href="https://indieweb.org/"><img src="/assets/indiewebcamp.svg" class="logo"></a>
 
   <a class="item" href="<?= $channel_link ?>"><?= $channel ?></a>
+  <a class="item" href="<?= $channel_link ?><?= $date->format('Y-m-d') ?>"><?= $dateTitle ?></a>
 
   <ul class="right">
     <!--
@@ -25,14 +26,14 @@
       </form>
     </li>
     <li>
-      <?php if($yesterday): ?>
+      <?php if(isset($yesterday)): ?>
         <a href="./<?= $yesterday ?>" rel="prev">Prev</a>
       <?php else: ?>
         <span class="disabled">Prev</span>
       <?php endif; ?>
     </li>
     <li>
-      <?php if($tomorrow): ?>
+      <?php if(isset($tomorrow)): ?>
         <a href="./<?= $tomorrow ?>" rel="next">Next</a>
       <?php else: ?>
         <span class="disabled">Next</span>
@@ -42,54 +43,3 @@
 
 </div>
 
-<style type="text/css">
-#indieweb-header {
-  height: 30px;
-
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cccccc+1,cccccc+23,eeeeee+99 */
-  background: #cccccc; /* Old browsers */
-  background: -moz-linear-gradient(top, #cccccc 1%, #cccccc 23%, #eeeeee 99%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #cccccc 1%,#cccccc 23%,#eeeeee 99%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #cccccc 1%,#cccccc 23%,#eeeeee 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-
-  border-bottom: #ddd 1px solid;
-}
-#indieweb-header .logo {
-  height: 26px;
-  margin-top: 2px;
-  margin-left: 8px;
-}
-.bottombar { 
-  padding-top: 10px;
-  padding-bottom: 10px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
-#indieweb-header .item {
-  float: left;
-  margin: 0;
-  padding: 0;
-  line-height: 26px;
-  margin-right: 20px;
-}
-#set-timezone-form {
-  padding-top: 6px;
-}
-#indieweb-header ul.right {
-  float: right;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  margin-right: 10px;
-}
-#indieweb-header ul.right li {
-  float: left;
-  margin-left: 20px;
-  line-height: 26px;
-  font-size: 15px;
-}
-#indieweb-header .disabled {
-  color: #999;
-}
-</style>
