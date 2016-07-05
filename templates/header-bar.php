@@ -26,14 +26,14 @@
       </form>
     </li>
     <li>
-      <?php if(isset($yesterday)): ?>
+      <?php if(isset($yesterday) && $yesterday): ?>
         <a href="./<?= $yesterday ?>" rel="prev">Prev</a>
       <?php else: ?>
         <span class="disabled">Prev</span>
       <?php endif; ?>
     </li>
     <li>
-      <?php if(isset($tomorrow)): ?>
+      <?php if(isset($tomorrow) && $tomorrow): ?>
         <a href="./<?= $tomorrow ?>" rel="next">Next</a>
       <?php else: ?>
         <span class="disabled">Next</span>

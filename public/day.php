@@ -34,6 +34,9 @@ $dateTitle = $start->format('Y-m-d');
 $tomorrow = date('Y-m-d', $end->format('U')+60);
 $yesterday = date('Y-m-d', $start->format('U')-86400);
 if(strtotime($tomorrow) > time()) $tomorrow = false;
+if($channel != '#indieweb' && $start->format('U') < 1467615600) $yesterday = false;
+
+
 
 if($channel == '#indieweb')
   $query_channels = ['#indieweb','#indiewebcamp'];

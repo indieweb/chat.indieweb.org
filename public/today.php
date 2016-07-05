@@ -3,4 +3,10 @@ include('inc.php');
 
 $channel = $_GET['channel'];
 $destination = ($channel == 'indieweb' ? '' : $channel.'/');
-header('Location: ' . Config::$base . $destination . date('Y-m-d'));
+
+list($tzname, $tz) = getViewerTimezone();
+
+$date = new DateTime();
+$date->setTimeZone($tz);
+
+header('Location: ' . Config::$base . $destination . $date->format('Y-m-d'));
