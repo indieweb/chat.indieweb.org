@@ -15,7 +15,7 @@ $utc = new DateTimeZone('UTC');
 
 # Get the start/end times for this day
 $start = new DateTime($_GET['date'].' 00:00:00', $tz);
-$date = $start;
+$date = clone $start;
 $end = new DateTime($_GET['date'].' 23:59:59', $tz);
 
 $start_utc = new DateTime($_GET['date'].' 00:00:00', $tz);
@@ -27,13 +27,17 @@ $channel = '#'.$_GET['channel'];
 $channel_link = Config::base_url_for_channel($channel);
 
 $db = new Quartz\DB(Config::$logpath.$channel, 'r');
-$results = $db->queryRange($start, $end);
+$results = $db->queryRange(clone $start, clone $end);
 
-$dateTitle = $start->format('Y-m-d');
+$dateTitle = $start->format('Y-m-d').' '.$tz->getName();
 
-$tomorrow = date('Y-m-d', $end->format('U')+60);
-$yesterday = date('Y-m-d', $start->format('U')-86400);
-if(strtotime($tomorrow) > time()) $tomorrow = false;
+$tmrw = new DateTime($_GET['date'].' 00:00:00', $tz);
+$tmrw->add(new DateInterval('P1D'));
+$tomorrow = $tmrw->format('Y-m-d');
+$ystr = new DateTime($_GET['date'].' 00:00:00', $tz);
+$ystr->sub(new DateInterval('P1D'));
+$yesterday = $ystr->format('Y-m-d');
+if($tmrw->format('U') > time()) $tomorrow = false;
 if($channel != '#indieweb' && $start->format('U') < 1467615600) $yesterday = false;
 
 

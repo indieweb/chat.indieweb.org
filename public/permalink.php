@@ -33,6 +33,9 @@ $date = DateTime::createFromFormat('U.u', sprintf('%.03f',$current->timestamp/10
 
 $dateTitle = $date->format('Y-m-d');
 
+$channelName = $channel;
+if($timestamp < 1467615600 && $channelName == '#indieweb') $channelName = '#indiewebcamp';
+
 
 include('templates/header.php');
 include('templates/header-bar.php');

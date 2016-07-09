@@ -19,23 +19,21 @@ function db() {
 function db_row_to_new_log($row) {
   $date = DateTime::createFromFormat('U.u', floor($row->timestamp/1000).'.'.sprintf('%06d',1000*($row->timestamp%1000)));
 
-  return json_decode(json_encode([
-    'type' => $row->type == 64 ? 'join' : 'message',
-    'timestamp' => $date->format('U.u'),
-    'network' => 'irc',
-    'server' => 'freenode',
-    'channel' => [
-      'id' => $row->channel,
-      'name' => $row->channel,
-    ],
-    'author' => [
-      'uid' => $row->nick,
-      'nickname' => $row->nick,
-      'name' => $row->nick,
-      'username' => null
-    ],
-    'content' => $row->line,
-  ]));
+  $line = new StdClass;
+  $line->type = $row->type == 64 ? 'join' : 'message';
+  $line->timestamp = $date->format('U.u');
+  $line->network = 'irc';
+  $line->server = 'freenode';
+  $line->channel = new StdClass;
+  $line->channel->id = $row->channel;
+  $line->channel->name = $row->channel;
+  $line->author = new StdClass;
+  $line->author->uid = $row->nick;
+  $line->author->nickname = $row->nick;
+  $line->author->name = $row->nick;
+  $line->author->username = $row->nick;
+  $line->content = $row->line;
+  return $line;
 }
 
 class ImageProxy {
