@@ -131,6 +131,7 @@
 
   position: fixed;
   top: 0;
+  z-index: 1000;
   width: 100%;
 }
 body {
@@ -174,8 +175,8 @@ body {
   box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125)
 }
 #indieweb-header .channels .channel.activity {
-  background: #fafae5;
-  box-shadow: inset 0 3px 8px rgba(200, 200, 90, 0.325)
+  background: #ffee88;
+  box-shadow: inset 0 3px 8px rgba(200, 180, 30, 0.325)
 }
 
 #set-timezone-form {

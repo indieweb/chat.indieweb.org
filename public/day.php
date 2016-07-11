@@ -56,8 +56,8 @@ $channelName = $channel;
 if($start->format('U') < 1467615600 && $channelName == '#indieweb') $channelName = '#indiewebcamp';
 
 
-$db = new Quartz\DB(Config::$logpath.$channel, 'r');
-$results = $db->queryRange(clone $start, clone $end);
+#$db = new Quartz\DB(Config::logpath_for_channel($channel), 'r');
+#$results = $db->queryRange(clone $start, clone $end);
 
 
 if($channel == '#indieweb')
