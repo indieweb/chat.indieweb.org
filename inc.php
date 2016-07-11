@@ -165,6 +165,7 @@ function refreshUsers() {
 
 $users = array();
 
+// TODO: Load different user data depending on the channel (mainly for w3c channel)
 function loadUsers() {
 	global $users;
   $filename = dirname(__FILE__).'/data/users.json';

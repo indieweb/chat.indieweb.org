@@ -56,8 +56,14 @@
     clear: both;
   }
   
+  h2.date {
+    padding: 0 10px;
+    margin: 0;
+    margin-top: 6px;
+  }
+  
   .logs {
-    padding: 10px;
+    padding: 4px 10px 16px 10px;
   }
   
   .hilite {
@@ -112,37 +118,66 @@
 
 
 #indieweb-header {
-  height: 30px;
+  height: 36px;
 
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cccccc+1,cccccc+23,eeeeee+99 */
-  background: #cccccc; /* Old browsers */
-  background: -moz-linear-gradient(top, #cccccc 1%, #cccccc 23%, #eeeeee 99%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #cccccc 1%,#cccccc 23%,#eeeeee 99%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #cccccc 1%,#cccccc 23%,#eeeeee 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: #fafafa; /* Old browsers */
+  background: -moz-linear-gradient(top, #ffffff, #f2f2f2); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #ffffff, #f2f2f2); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #ffffff, #f2f2f2); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 
   border-bottom: #ddd 1px solid;
+  font-size: 16px;
+  overflow-y: hidden;
+
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+body {
+  padding-top: 40px;
 }
 #indieweb-header .logo {
-  height: 26px;
+  height: 32px;
   margin-top: 2px;
   margin-left: 8px;
 }
-#chat-footer { 
-  background: #eee;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+#indieweb-header a {
+  color: #666;
+  text-shadow: 0 1px 0 #ffffff;
+  text-decoration: none;
+}
+#indieweb-header a:hover {
+  color: #333;
+  text-shadow: 2px 2px 2px #fff;
 }
 #indieweb-header .item {
   float: left;
   margin: 0;
   padding: 0;
   line-height: 26px;
-  margin-right: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
+#indieweb-header .channels {
+  display: inline-block;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#indieweb-header .channels .channel {
+  display: inline-block;
+  margin: 0;
+  padding: 9px 10px;
+}
+#indieweb-header .channels .channel.current {
+  background: #e5e5e5;
+  box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125)
+}
+#indieweb-header .channels .channel.activity {
+  background: #fafae5;
+  box-shadow: inset 0 3px 8px rgba(200, 200, 90, 0.325)
+}
+
 #set-timezone-form {
   padding-top: 6px;
 }
@@ -154,12 +189,27 @@
   margin-right: 10px;
 }
 #indieweb-header ul.right li {
-  float: left;
-  margin-left: 20px;
-  line-height: 26px;
-  font-size: 15px;
+  display: inline-block;
+  margin: 0;
+  padding: 4px 10px;
 }
 #indieweb-header .disabled {
-  color: #999;
+  color: #ccc;
 }
 
+
+#chat-footer { 
+  border-top: 1px #ddd solid;
+  
+  background: #fafafa; /* Old browsers */
+  background: -moz-linear-gradient(top, #ffffff, #f2f2f2); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #ffffff, #f2f2f2); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #e9e9e9, #f2f2f2); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

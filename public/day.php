@@ -1,6 +1,17 @@
 <?php
 include('inc.php');
 
+
+if(!in_array($_GET['channel'], Config::supported_channels())) {
+  header('HTTP/1.1 404 Not Found');
+  die('channel not found');
+}
+
+if($_GET['channel'] == 'pdxbots' && $_SERVER['REMOTE_ADDR'] != '162.213.78.244') {
+  die('forbidden');
+}
+
+
 # Pre-load variables required for header
 $permalink = false;
 
@@ -23,13 +34,7 @@ $start_utc->setTimeZone($utc);
 $end_utc = new DateTime($_GET['date'].' 23:59:59', $tz);
 $end_utc->setTimeZone($utc);
 
-$channel = '#'.$_GET['channel'];
-$channel_link = Config::base_url_for_channel($channel);
-
-$db = new Quartz\DB(Config::$logpath.$channel, 'r');
-$results = $db->queryRange(clone $start, clone $end);
-
-$dateTitle = $start->format('Y-m-d').' '.$tz->getName();
+$dateTitle = $start->format('Y-m-d');
 
 $tmrw = new DateTime($_GET['date'].' 00:00:00', $tz);
 $tmrw->add(new DateInterval('P1D'));
@@ -38,13 +43,21 @@ $ystr = new DateTime($_GET['date'].' 00:00:00', $tz);
 $ystr->sub(new DateInterval('P1D'));
 $yesterday = $ystr->format('Y-m-d');
 if($tmrw->format('U') > time()) $tomorrow = false;
+
+$channel = '#'.$_GET['channel'];
+$channel_link = Config::base_url_for_channel($channel);
+
+// TODO: make this work for reals
 if($channel != '#indieweb' && $start->format('U') < 1467615600) $yesterday = false;
 
-
-
 $channelName = $channel;
+
+// #indiewebcamp channel was renamed to #indieweb on 2016-07-04
 if($start->format('U') < 1467615600 && $channelName == '#indieweb') $channelName = '#indiewebcamp';
 
+
+$db = new Quartz\DB(Config::$logpath.$channel, 'r');
+$results = $db->queryRange(clone $start, clone $end);
 
 
 if($channel == '#indieweb')
@@ -72,6 +85,8 @@ include('templates/header-bar.php');
 
 # Render chat logs here
 ?>
+<h2 class="date"><?= $channelName ?> <?= $dateTitle ?></h2>
+
 <div class="logs">
   <div id="top" class="skip"><a href="#bottom">jump to bottom</a></div>
   <div id="log-lines">
@@ -87,13 +102,16 @@ include('templates/header-bar.php');
   </div>
   <div id="bottom" class="skip"><a href="#top">jump to top</a></div>
 </div>
-<input id="channel" value="<?= $_GET['channel'] ?>" style="display:none;">
+
+<?php if(!isset($tomorrow) || !$tomorrow): /* Set the channel name to activate realtime streaming, only when viewing "today" */ ?>
+  <input id="active-channel" value="<?= Config::irc_channel_for_slug($_GET['channel']) ?>" style="display:none;">
+<?php endif; ?>
 
 <?php include('templates/footer-bar.php'); ?>
 
 <script type="text/javascript" src="/assets/pushstream.js"></script>
 <script type="text/javascript">
-  if(window.location.hash) {
+  if(window.location.hash && window.location.hash != '#top' && window.location.hash != '#bottom') {
     var n = document.getElementById(window.location.hash.replace('#',''));
     n.classList.add('hilite');
   }

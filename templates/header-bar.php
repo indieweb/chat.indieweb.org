@@ -2,8 +2,13 @@
 
   <a class="item" href="https://indieweb.org/"><img src="/assets/indiewebcamp.svg" class="logo"></a>
 
-  <a class="item" href="<?= $channel_link ?>"><?= $channelName ?></a>
-  <a class="item" href="<?= $channel_link ?><?= $date->format('Y-m-d') ?>"><?= $dateTitle ?></a>
+  <ul class="channels" id="channel-bar">
+  <?php foreach(Config::related_channels($channelName) as $c): ?>
+    <li class="channel <?= ($channelName == '#'.$c ? 'current' : '') ?>" data-channel="<?= Config::irc_channel_for_slug($c) ?>">
+      <a href="<?= Config::base_url_for_channel($c) ?>">#<?= $c ?></a>
+    </li>
+  <?php endforeach; ?>
+  </ul>
 
   <ul class="right">
     <!--

@@ -1,6 +1,11 @@
 <?php
 include('inc.php');
 
+if(!in_array($_GET['channel'], Config::supported_channels())) {
+  header('HTTP/1.1 404 Not Found');
+  die('channel not found');
+}
+
 # Pre-load variables required for header
 $permalink = true;
 
