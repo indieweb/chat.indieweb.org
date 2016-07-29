@@ -28,7 +28,7 @@ pushstream.onmessage = function(data,id,channel) {
   } else {
     // Else check if the channel is in the header bar, and mark that channel as having unread messages
     var tab = document.getElementById('channel-bar').querySelector('.channel[data-channel="'+data.channel+'"]');
-    if(tab) {
+    if(tab && data.type == 'message') {
       tab.classList.add('activity');
     }
   }

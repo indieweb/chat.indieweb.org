@@ -34,7 +34,7 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
   $line['type'] = $input->type;
 
   if(preg_match('/^\[\[(?<page>.+)\]\](?: (?<type>[!NM]*|delete|restore|upload|moved))? (?<url>[^ ]+) \* (?<user>[^\*]+) \* (?:\((?<size>[+-]\d+)\))?(?:deleted|restored|moved)?(?<comment>.*)/', $line['content'], $match)) {
-    $line = format_wiki_line($line, $match, $mf, $blank_avatar);
+    $line = format_wiki_line($channel, $line, $match, $mf, $blank_avatar);
   }
 
   // Old twitter citations  
@@ -117,7 +117,10 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
   return ob_get_clean();
 }
 
-function format_wiki_line($line, $match, $mf, $blank_avatar) {
+function format_wiki_line($channel, $line, $match, $mf, $blank_avatar) {
+  if(!Config::wiki_base($channel))
+    return $line;
+  
   // Wiki edits
   $line['type'] = 'wiki';
   $user = userForHost($match['user']);
@@ -151,7 +154,7 @@ function format_wiki_line($line, $match, $mf, $blank_avatar) {
     $action = 'edited';
 
   if(in_array($action, array('deleted','restored','uploaded','moved'))) {
-    $line['diff'] = 'https://indiewebcamp.com/' . $match['page'];
+    $line['diff'] = Config::wiki_base($channel) . $match['page'];
     if(preg_match('/"\[\[(.+)\]\]": (.+)/', $match['comment'], $dmatch)) {
       $match['page'] = str_replace(' ','_',$dmatch[1]);
       $match['comment'] = $dmatch[2];

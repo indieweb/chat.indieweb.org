@@ -48,7 +48,7 @@ $channel = '#'.$_GET['channel'];
 $channel_link = Config::base_url_for_channel($channel);
 
 // TODO: make this work for reals
-if($channel != '#indieweb' && $start->format('U') < 1467615600) $yesterday = false;
+if($channel == '#dev' && $start->format('U') < 1467615600) $yesterday = false;
 
 $channelName = $channel;
 
