@@ -1,7 +1,7 @@
 <ul class="side-nav fixed" id="slide-out">
   <li><div class="userView">
     <img src="/assets/user-bkg.jpg" class="background">
-    <a href="#!user"><img class="circle" src="/assets/logo/<?= Config::logo_for_channel($channel); ?>"></a>
+    <a href="#"><img class="circle" src="/assets/logo/<?= Config::logo_for_channel($channel); ?>"></a>
     <a><span class="white-text name" style="font-size: 18pt;"><?= $channelName ?></span></a>
     <a><span class="white-text email"><?= $dateTitle ?></span></a>
   </div></li>
