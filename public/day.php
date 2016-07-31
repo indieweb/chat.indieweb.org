@@ -85,7 +85,9 @@ include('templates/header-bar.php');
 
 # Render chat logs here
 ?>
-<h2 class="date"><?= $channelName ?> <?= $dateTitle ?></h2>
+<main>
+
+<h2 class="date"><span class="channel-name"><?= $channelName ?></span> <?= $dateTitle ?></h2>
 
 <div class="logs">
   <div id="top" class="skip"><a href="#bottom">jump to bottom</a></div>
@@ -104,7 +106,7 @@ include('templates/header-bar.php');
 </div>
 
 <?php if(!isset($tomorrow) || !$tomorrow): /* Set the channel name to activate realtime streaming, only when viewing "today" */ ?>
-  <input id="active-channel" value="<?= Config::irc_channel_for_slug($_GET['channel']) ?>" style="display:none;">
+  <input id="active-channel" type="hidden" value="<?= Config::irc_channel_for_slug($_GET['channel']) ?>" style="display:none;">
 <?php endif; ?>
 
 <?php include('templates/footer-bar.php'); ?>
@@ -126,6 +128,6 @@ include('templates/header-bar.php');
 <script type="text/javascript" src="/assets/log-streaming.js"></script>
 <?php endif; ?>
 
+</main>
 <?php
-
 include('templates/footer.php');

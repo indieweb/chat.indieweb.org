@@ -17,14 +17,16 @@ list($tzname, $tz) = getViewerTimezone();
 $utc = new DateTimeZone('UTC');
 
 
-$channel = Config::irc_channel_for_slug($_GET['channel'], $_GET['timestamp']);
+$query_channel = Config::irc_channel_for_slug($_GET['channel'], $_GET['timestamp']);
+$channel = '#'.$_GET['channel'];
 $channel_link = Config::base_url_for_channel('#'.$_GET['channel']);
 $timestamp = $_GET['timestamp'];
 
 
+
 $query = db()->prepare('SELECT * FROM irclog 
   WHERE channel=:channel AND timestamp = :timestamp AND hide=0');
-$query->bindParam(':channel', $channel);
+$query->bindParam(':channel', $query_channel);
 $query->bindValue(':timestamp', floor($timestamp/1000));
 $query->execute();
 $current = false;
@@ -39,17 +41,19 @@ $date = DateTime::createFromFormat('U.u', sprintf('%.03f',$current->timestamp/10
 $dateTitle = $date->format('Y-m-d');
 
 $channelName = $channel;
-if($timestamp < 1467615600 && $channelName == '#indieweb') $channelName = '#indiewebcamp';
+if(($timestamp/1000000) < 1467615600 && $channelName == '#indieweb') $channelName = '#indiewebcamp';
 
 
 include('templates/header.php');
 include('templates/header-bar.php');
 ?>
-<div class="logs">
-  <div id="log-lines" class="featured">
-    <?= format_line($channel, $date, $tz, db_row_to_new_log($current)) ?>
+<main>
+  <div class="logs">
+    <div id="log-lines" class="featured">
+      <?= format_line($channel, $date, $tz, db_row_to_new_log($current)) ?>
+    </div>
   </div>
-</div>
+</main>
 <?php
 
 include('templates/footer.php');

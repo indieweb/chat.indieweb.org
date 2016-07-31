@@ -1,6 +1,6 @@
 // Streaming logs
 var pushstream = new PushStream({
-  host: "chat.indieweb.org",
+  host: window.location.hostname,
   port: 443,
   useSSL: true,
   modes: "eventsource",
@@ -9,7 +9,7 @@ var pushstream = new PushStream({
   channelsArgument: "id"
 });
 pushstream.onmessage = function(data,id,channel) {
-  console.log(data);
+  // console.log(data);
   
   // Check that this channel matches the active channel
   if(document.getElementById('active-channel') && document.getElementById('active-channel').value == data.channel) {
@@ -26,12 +26,42 @@ pushstream.onmessage = function(data,id,channel) {
       check_alert(data);
     }
   } else {
-    // Else check if the channel is in the header bar, and mark that channel as having unread messages
-    var tab = document.getElementById('channel-bar').querySelector('.channel[data-channel="'+data.channel+'"]');
-    if(tab && data.type == 'message') {
-      tab.classList.add('activity');
-    }
+    channel_activity(data.channel, data.type);
   }
 }
 pushstream.addChannel('chat');
 pushstream.connect();
+
+// Channel unread indicators
+function channel_activity(channel, type) {
+  var tab = document.querySelector('li.channel[data-channel="'+channel+'"]');
+  if(tab && type == 'message') {
+    tab.classList.add('activity');
+  }
+
+  var channels = Cookies.getJSON('unread');
+  if(channels == null) {
+    channels = {};
+  }
+  if(typeof channels[channel] == 'undefined' || channels[channel] == 'read') {
+    channels[channel] = 'unread';
+    Cookies.set('unread', channels);
+  }
+}
+
+function channel_unread(channel) {
+  var channels = Cookies.getJSON('unread');
+  return channels && channels[channel] == 'unread';
+}
+
+function channel_read(channel) {
+  var channels = Cookies.getJSON('unread');
+  if(channels) {
+    channels[channel] = 'read';
+  }
+  Cookies.set('unread', channels);
+  var tab = document.querySelector('li.channel[data-channel="'+channel+'"]');
+  if(tab) {
+    tab.classList.remove('activity');
+  }
+}

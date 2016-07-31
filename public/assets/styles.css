@@ -1,15 +1,51 @@
-  body {
-    font-family: "Helvetica Neue", sans-serif;
-    font-size: 16px;
-    margin: 0;
-    padding: 0;
+main {
+  padding-left: 300px;
+}
+
+@media (max-width : 992px) {
+  main {
+    padding-left: 0;
   }
+  main h2 .channel-name {
+    display: none;
+  }
+  :target:before {
+    content: "";
+    display: block;
+    height: 72px;
+    margin-top: -72px;
+  }
+}
+@media (min-width : 992px) {
+  nav {
+    display: none;
+  }
+}
+
+li.channel.activity {
+  background-color: rgba(255,177,0,0.25);
+}
+
+li.channel.current {
+  background-color: rgb(240,240,240);
+}
+
+#set-timezone-form {
+  padding: 10px;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+
+
   a.time {
     color: #999;
   }
   a.hash {
-      color: #BBB;
-      text-decoration: none;
+    color: #BBB;
+    text-decoration: none;
   }
   .line {
     min-height: 22px;
@@ -66,7 +102,7 @@
     padding: 4px 10px 16px 10px;
   }
   
-  .hilite {
+  .hilite .in {
     background-color: #fffdd0;
   }
   
@@ -81,9 +117,6 @@
     body {
       width: 100%;
       font-size: 12px;
-    }
-    .line {
-      margin-bottom: 4px;
     }
     .avatar img {
       width: 16px;
@@ -116,59 +149,7 @@
   }
 
 
-#indieweb-header .logo {
-  height: 32px;
-  margin-top: 2px;
-  margin-left: 8px;
-}
-#indieweb-header {
-  height: 36px;
 
-  background: #fafafa;
-  background: -moz-linear-gradient(top, #ffffff, #f2f2f2);
-  background: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
-  background: linear-gradient(to bottom, #ffffff, #f2f2f2);
-
-  border-bottom: #ddd 1px solid;
-  font-size: 16px;
-  overflow-y: hidden;
-
-  position: fixed;
-  top: 0;
-  z-index: 1000;
-  width: 100%;
-}
-body {
-  padding-top: 40px;
-}
-#indieweb-header a {
-  color: #666;
-  text-shadow: 0 1px 0 #ffffff;
-  text-decoration: none;
-}
-#indieweb-header a:hover {
-  color: #333;
-  text-shadow: 2px 2px 2px #fff;
-}
-#indieweb-header .item {
-  float: left;
-  margin: 0;
-  padding: 0;
-  line-height: 26px;
-  margin-right: 10px;
-  margin-left: 10px;
-}
-#indieweb-header .channels {
-  display: inline-block;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-#indieweb-header .channels li {
-  display: inline-block;
-  margin: 0;
-  padding: 9px 10px;
-}
 #indieweb-header .channels .channel.current {
   background: #e5e5e5;
   box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125)

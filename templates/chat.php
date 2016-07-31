@@ -223,7 +223,7 @@ function check_alert(data){
 function send(text) {
   xhr = new XMLHttpRequest();
   
-  xhr.open('POST', encodeURI('/irc/send.php?action=input'));
+  xhr.open('POST', encodeURI('/send.php?action=input'));
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onload = function() {
     if (xhr.status === 200) {
@@ -234,12 +234,12 @@ function send(text) {
       alert('Request failed.  Returned status of ' + xhr.status);
     }
   };
-  xhr.send('user_name=' + encodeURIComponent(nickname) + '&text=' + encodeURIComponent(text));
+  xhr.send('user_name=' + encodeURIComponent(nickname) + '&text=' + encodeURIComponent(text) + '&channel=' + encodeURIComponent(document.getElementById('channel').value));
 }
 function join(nick) {
   xhr = new XMLHttpRequest();
 
-  xhr.open('POST', encodeURI('/irc/send.php?action=join'));
+  xhr.open('POST', encodeURI('/send.php?action=join'));
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onload = function() {
     console.log("Got status "+xhr.status);
@@ -253,6 +253,6 @@ function join(nick) {
       alert('Request failed.  Returned status of ' + xhr.status);
     }
   };
-  xhr.send('user_name=' + encodeURIComponent(nickname));
+  xhr.send('user_name=' + encodeURIComponent(nickname) + '&channel=' + encodeURIComponent(document.getElementById('channel').value));
 }
 </script>
