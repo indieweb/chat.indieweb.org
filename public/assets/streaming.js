@@ -40,7 +40,7 @@ function channel_activity(channel, type) {
   }
 
   var channels = Cookies.getJSON('unread');
-  if(channels == null) {
+  if(channels == "undefined") {
     channels = {};
   }
   if(typeof channels[channel] == 'undefined' || channels[channel] == 'read') {
