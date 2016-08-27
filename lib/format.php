@@ -35,6 +35,7 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
 
   if(preg_match('/^\[\[(?<page>.+)\]\](?: (?<type>[!NM]*|delete|restore|upload|moved))? (?<url>[^ ]+) \* (?<user>[^\*]+) \* (?:\((?<size>[+-]\d+)\))?(?:deleted|restored|moved)?(?<comment>.*)/', $line['content'], $match)) {
     $line = format_wiki_line($channel, $line, $match, $mf, $blank_avatar);
+    $who = $line['who'];
   }
 
   // Old twitter citations  
@@ -142,6 +143,8 @@ function format_wiki_line($channel, $line, $match, $mf, $blank_avatar) {
       . '<a class="author ' . ($mf ? 'p-nickname p-name u-url' : '') . '" href="http://' . strtolower($match['user']) . '" target="_blank">' . strtolower($match['user']) . '</a>'
       . '</span>';
   }
+
+  $line['who'] = $who;
 
   if(trim($match['url']) == 'delete')
     $action = 'deleted';
