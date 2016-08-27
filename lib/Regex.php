@@ -99,7 +99,7 @@ class Regex_Phone extends Regex
 class Regex_Twitter extends Regex
 {
     public static $expression = '/(?<![a-z0-9_\/])@([a-z0-9_]+)/i';
-    public static $replacement = '<a href="http://twitter.com/$1" target="_blank">@$1</a>';
+    public static $replacement = '<a href="https://twitter.com/$1" target="_blank">@$1</a>';
 
     /**
      * Returns the Twitter username found in $text
@@ -137,7 +137,7 @@ class Regex_URL extends Regex
 class Regex_WikiPage extends Regex
 {
     public static $expression = array('/(^|\s)(\/[^ >]+)/i','/\[\[([^\]]+)\]\]/');
-    public static $replacement = array('$1<a href="http://indiewebcamp.com$2" target="_blank">$2</a>','[[<a href="http://indiewebcamp.com/$1" target="_blank">$1</a>]]');
+    public static $replacement = array('$1<a href="https://indieweb.org$2" target="_blank">$2</a>','[[<a href="https://indieweb.org/$1" target="_blank">$1</a>]]');
 
     /**
      * Returns the raw URL found in $text

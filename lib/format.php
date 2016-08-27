@@ -86,6 +86,9 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
   if($line['type'] == 'twitter' && preg_match('/^RT /', $line['content']))
     $classes[] = 'retweet';
 
+  if(isMeMessage($line['content']))
+    $classes[] = 'emote';
+
   $mf = $mf && !in_array($line['type'], ['join','leave']);
 
 
@@ -98,15 +101,17 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
         echo '<a href="' . $url . '" class="' . ($mf ? 'u-url' : '') . ' time" >' . $localdate->format('H:i') . '</a>';
       echo '</time> ';
 
-      if(!in_array($line['type'], ['join','leave']))
-        echo '<span class="nick' . ($mf ? ' p-author h-card' : '') . '">' . $who . '</span> ';
+      echo '<span class="text">';
+        if(!in_array($line['type'], ['join','leave']))
+          echo '<span class="nick' . ($mf ? ' p-author h-card' : '') . '">' . $who . '</span> ';
 
-      echo '<span class="' . ($mf ? 'e-content p-name' : '') . '">';
-        if(!in_array($line['type'], ['join','leave'])) {
-          echo filterText($line['content']);
-        } else {
-          echo $nick . ' ' . ($line['type'] == 'join' ? 'joined' : 'left') . ' the channel';
-        }
+        echo '<span class="' . ($mf ? 'e-content p-name' : '') . '">';
+          if(!in_array($line['type'], ['join','leave'])) {
+            echo filterText($line['content']);
+          } else {
+            echo $nick . ' ' . ($line['type'] == 'join' ? 'joined' : 'left') . ' the channel';
+          }
+        echo '</span>';
       echo '</span>';
       
       if($line['type'] == 'twitter' && $permalink) {

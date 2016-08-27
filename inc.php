@@ -106,6 +106,9 @@ function filterText($text) {
 	$text = htmlspecialchars($text, ENT_SUBSTITUTE, 'UTF-8');
   #$text = mb_encode_numericentity($text);
 
+  // Remove `/me ` from the beginning of lines
+  $text = preg_replace('/^\/me /', '', $text);
+
 	$text = preg_replace(Regex_URL::$expression, Regex_URL::$replacement, $text);
 	$text = preg_replace(Regex_Twitter::$expression, Regex_Twitter::$replacement, $text);
 	$text = preg_replace(Regex_WikiPage::$expression, Regex_WikiPage::$replacement, $text);
@@ -114,6 +117,10 @@ function filterText($text) {
   $text = preg_replace('/(?<!\")(http:\/\/meme\.loqi\.me\/m\/[a-zA-Z0-9_]+\.(jpg|gif|png))/', '$1<br><img src="$1" style="max-width: 200px; vertical-align: top; margin-left: 80px;">', $text);
 	
 	return $text;
+}
+
+function isMeMessage($text) {
+  return preg_match('/^\/me /', $text);
 }
 
 function xmlEscapeText($text, $autolink=TRUE) {

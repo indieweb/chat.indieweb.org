@@ -57,6 +57,9 @@ h2 {
   .msg-wiki, .msg-wiki a, .msg-wiki a.author {
     color: #7e3db4;
   }
+  .msg-message.emote .text {
+    font-style: italic;
+  }
   .msg-twitter.retweet {
     opacity: 0.5;
   }
