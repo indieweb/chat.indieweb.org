@@ -95,6 +95,7 @@ if(!isset($tomorrow) || !$tomorrow) {
   }
 }
 
+$noindex = true;
 include('templates/header.php');
 include('templates/header-bar.php');
 
