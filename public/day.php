@@ -79,6 +79,21 @@ $logs->bindValue(':max', $end_utc->format('U')*1000);
 $logs->execute();
 
 
+// If there is no tomorrow, then it is today
+if(!isset($tomorrow) || !$tomorrow) {
+  // Never cache today
+  header('Cache-Control: no-cache, no-store, must-revalidate');
+} else {
+  header('Last-Modified: '.$end_utc->format('D, d M Y H:i:s T'));
+  header('Cache-Control: max-age=2592000');
+
+  if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+    if(strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $end_utc->format('U')) {
+      header('HTTP/1.1 304 Not Modified');
+      die();
+    }
+  }
+}
 
 include('templates/header.php');
 include('templates/header-bar.php');
