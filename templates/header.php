@@ -21,6 +21,7 @@ header('Content-Type: text/html; charset=utf-8');
   <link rel="stylesheet" type="text/css" href="/assets/styles.css">
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="generator" content="https://github.com/indieweb/chat.indieweb.org">
   <link rel="pingback" href="https://webmention.io/indiewebcamp/xmlrpc">
   <link href="https://webmention.io/indiewebcamp/webmention" rel="webmention">
   <script src="/assets/pushstream.js"></script>
