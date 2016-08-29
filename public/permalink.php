@@ -57,13 +57,18 @@ if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
   }
 }
 
+$line = db_row_to_new_log($current);
+if ($line->type == 'join') {
+    $noindex = true;
+}
+
 include('templates/header.php');
 include('templates/header-bar.php');
 ?>
 <main>
   <div class="logs">
     <div id="log-lines" class="featured">
-      <?= format_line($channel, $date, $tz, db_row_to_new_log($current)) ?>
+      <?= format_line($channel, $date, $tz, $line) ?>
     </div>
   </div>
 </main>
