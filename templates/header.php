@@ -8,6 +8,13 @@ header('Content-Type: text/html; charset=utf-8');
 
   <?php if($permalink): ?>
   <meta name="description" value="<?= htmlspecialchars($current->nick . ': ' . $current->line) ?>">
+  <meta name="author" content="<?= htmlspecialchars($current->nick) ?>"/>
+  <?php endif; ?>
+  <?php if(isset($userUrl) && $userUrl): ?>
+  <link rel="author" href="<?= htmlspecialchars($userUrl) ?>"/>
+  <?php endif; ?>
+  <?php if(isset($noindex) && $noindex): ?>
+  <meta name="robots" value="noindex,follow"/>
   <?php endif; ?>
 
   <script src="/assets/jquery-3.1.0.min.js"></script>
