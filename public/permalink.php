@@ -23,7 +23,6 @@ $channel_link = Config::base_url_for_channel('#'.$_GET['channel']);
 $timestamp = $_GET['timestamp'];
 
 
-
 $query = db()->prepare('SELECT * FROM irclog 
   WHERE channel=:channel AND timestamp = :timestamp AND hide=0');
 $query->bindParam(':channel', $query_channel);
@@ -35,6 +34,11 @@ while($q = $query->fetch(PDO::FETCH_OBJ))
 
 if(!$current)
   die('not found');
+
+$user = userForNick($current->nick);
+if($user) {
+  $userUrl = @$user->properties->url[0];
+}
 
 $date = DateTime::createFromFormat('U.u', sprintf('%.03f',$current->timestamp/1000));
 
