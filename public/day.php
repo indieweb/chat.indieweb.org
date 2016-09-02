@@ -47,9 +47,9 @@ if($tmrw->format('U') > time()) $tomorrow = false;
 $channel = '#'.$_GET['channel'];
 $channel_link = Config::base_url_for_channel($channel);
 
-// TODO: make this work for reals
-if($channel == '#dev' && $start->format('U') < 1467615600) $yesterday = false;
-
+if (!isAfterFirst($channel, $yesterday)) {
+    $yesterday = false;
+}
 $channelName = $channel;
 
 // #indiewebcamp channel was renamed to #indieweb on 2016-07-04

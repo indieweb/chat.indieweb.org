@@ -175,7 +175,8 @@ h2 {
   margin: 0;
   padding: 4px 10px;
 }
-#indieweb-header .disabled {
+#indieweb-header .disabled,
+.side-nav.fixed a.disabled {
   color: #ccc;
 }
 
