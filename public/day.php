@@ -84,7 +84,7 @@ if(!isset($tomorrow) || !$tomorrow) {
   // Never cache today
   header('Cache-Control: no-cache, no-store, must-revalidate');
 } else {
-  header('Last-Modified: '.$end_utc->format('D, d M Y H:i:s T'));
+  header('Last-Modified: '.$end_utc->format('r'));
   header('Cache-Control: max-age=2592000');
 
   if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {

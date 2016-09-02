@@ -47,7 +47,7 @@ $dateTitle = $date->format('Y-m-d');
 $channelName = $channel;
 if(($timestamp/1000000) < 1467615600 && $channelName == '#indieweb') $channelName = '#indiewebcamp';
 
-header('Last-Modified: '.date('D, d M Y H:i:s T', $timestamp/1000000));
+header('Last-Modified: '.date('r', $timestamp/1000000));
 header('Cache-Control: max-age=2592000');
 
 if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
