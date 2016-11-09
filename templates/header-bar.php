@@ -1,7 +1,7 @@
 <ul class="side-nav fixed" id="slide-out">
   <li><div class="userView">
-    <img src="/assets/user-bkg.jpg" class="background">
-    <a href="#"><img class="circle" src="/assets/logo/<?= Config::logo_for_channel($channel); ?>"></a>
+    <img src="/assets/user-bkg.jpg" class="background"/>
+    <a href="#"><img class="circle" src="/assets/logo/<?= Config::logo_for_channel($channel); ?>"/></a>
     <a><span class="white-text name" style="font-size: 18pt;"><?= $channelName ?></span></a>
     <a><span class="white-text email"><?= $dateTitle ?></span></a>
   </div></li>
@@ -17,9 +17,9 @@
   <!--
   <li>
     <form action="http://www.google.com/search" method="get" style="margin-bottom: 0;">
-      <input type="text" name="q" placeholder="Search">
-      <input type="submit" value="Search">
-      <input type="hidden" name="as_sitesearch" value="indiewebcamp.com/irc">
+      <input type="text" name="q" placeholder="Search"/>
+      <input type="submit" value="Search"/>
+      <input type="hidden" name="as_sitesearch" value="indiewebcamp.com/irc"/>
     </form>
   </li>
   -->
@@ -31,7 +31,7 @@
             <option value="<?= $t ?>" <?= $t == $tzname ? 'selected="selected"' :'' ?>><?= $t ?></option>
           <?php endforeach; ?>
         </select>
-        <input type="hidden" name="location" value="<?= $_SERVER['REQUEST_URI'] ?>">
+        <input type="hidden" name="location" value="<?= $_SERVER['REQUEST_URI'] ?>"/>
       </div>
     </form>
   </li>

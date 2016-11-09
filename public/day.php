@@ -122,13 +122,13 @@ include('templates/header-bar.php');
 </div>
 
 <?php if(!isset($tomorrow) || !$tomorrow): /* Set the channel name to activate realtime streaming, only when viewing "today" */ ?>
-  <input id="active-channel" type="hidden" value="<?= Config::irc_channel_for_slug($_GET['channel']) ?>" style="display:none;">
+  <input id="active-channel" type="hidden" value="<?= Config::irc_channel_for_slug($_GET['channel']) ?>" style="display:none;"/>
 <?php endif; ?>
 
 <?php include('templates/footer-bar.php'); ?>
 
 <script type="text/javascript" src="/assets/pushstream.js"></script>
-<script type="text/javascript">
+<script type="text/javascript">/*<![CDATA[*/
   if(window.location.hash && window.location.hash != '#top' && window.location.hash != '#bottom') {
     var n = document.getElementById(window.location.hash.replace('#',''));
     n.classList.add('hilite');
@@ -139,7 +139,7 @@ include('templates/header-bar.php');
     var n = document.getElementById(window.location.hash.replace('#',''));
     n.classList.add('hilite');
   }, false);
-</script>
+/*]]>*/</script>
 <?php if(!array_key_exists('timestamp', $_GET) && isset($date) && date('Y-m-d') == $date): ?>
 <script type="text/javascript" src="/assets/log-streaming.js"></script>
 <?php endif; ?>

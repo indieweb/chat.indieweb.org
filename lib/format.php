@@ -10,12 +10,12 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
   $localdate = clone $date;
   $localdate->setTimeZone($tz);
 
-  $blank_avatar = '<div class="avatar" style="opacity: .20;"><img src="'.Config::$base.'/assets/user.svg" width="20" height="20"></div>';
+  $blank_avatar = '<div class="avatar" style="opacity: .20;"><img src="'.Config::$base.'/assets/user.svg" width="20" height="20"/></div>';
   $avatar = $blank_avatar;
 
   if($user) {
     if(property_exists($user->properties, 'photo')) {
-      $avatar = '<div class="avatar"><img src="' . ImageProxy::url($user->properties->photo[0]) . '" width="20" height="20" class="' . ($mf ? 'u-photo' : '') . '"></div>';
+      $avatar = '<div class="avatar"><img src="' . htmlspecialchars(ImageProxy::url($user->properties->photo[0])) . '" width="20" height="20" class="' . ($mf ? 'u-photo' : '') . '"/></div>';
     }
     $who = $avatar . '<span class="">'
       . '<a href="' . @$user->properties->url[0] . '" class="author ' . ($mf ? 'p-nickname p-name u-url' : '') . '" target="_blank">' . $nick . '</a>'
@@ -42,7 +42,7 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
   if($timestamp->format('U') < strtotime('2014-01-01') && preg_match('/^https?:\/\/twitter.com\/([^ ]+) /', $line['content'], $match)) {
     $line['type'] = 'twitter';
     $line['content'] = str_replace(array($match[0].':: ',$match[0]), '', $line['content']);
-    $avatar = '<div class="avatar"><img src="' . ImageProxy::url('http://twitter.com/' . $match[1] . '/profile_image') . '" width="20"></div>';
+    $avatar = '<div class="avatar"><img src="' . htmlspecialchars(ImageProxy::url('http://twitter.com/' . $match[1] . '/profile_image')) . '" width="20"/></div>';
     $who = $avatar . '<a href="http://twitter.com/' . $match[1] . '" class="author ' . ($mf ? 'p-url' : '') . '" target="_blank">@<span class="p-name p-nickname">' . $match[1] . '</span></a>';
   }
 
@@ -51,7 +51,7 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
     $line['type'] = 'twitter';
     $line['content'] = $match[2];
     $permalink = $match[3];
-    $avatar = '<div class="avatar"><img src="' . ImageProxy::url('http://twitter.com/' . $match[1] . '/profile_image') . '" width="20"></div>';
+    $avatar = '<div class="avatar"><img src="' . htmlspecialchars(ImageProxy::url('http://twitter.com/' . $match[1] . '/profile_image')) . '" width="20"/></div>';
     $who = $avatar . '<a href="https://twitter.com/' . $match[1] . '" class="author" target="_blank">@<span class="p-name p-nickname">' . $match[1] . '</span></a>';
   }
 
@@ -136,7 +136,7 @@ function format_wiki_line($channel, $line, $match, $mf, $blank_avatar) {
 
   if($user) {
     if(property_exists($user->properties, 'photo')) {
-      $avatar = '<div class="avatar"><img src="' . $user->properties->photo[0] . '" width="20" height="20" class="' . ($mf ? 'u-photo' : '') . '"></div>';
+      $avatar = '<div class="avatar"><img src="' . htmlspecialchars($user->properties->photo[0]) . '" width="20" height="20" class="' . ($mf ? 'u-photo' : '') . '"/></div>';
     } else {
       $avatar = $blank_avatar;
     }
