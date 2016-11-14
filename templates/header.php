@@ -7,6 +7,7 @@ header('Content-Type: text/html; charset=utf-8');
   <meta charset="utf-8"/>
   <title class="p-name"><?= $channelName ?> <?= $dateTitle ?></title>
 
+  <meta name="keywords" content="<?= htmlspecialchars($channelName) ?>"/>
   <?php if($permalink): ?>
   <meta name="description" content="<?= htmlspecialchars($current->nick . ': ' . $current->line) ?>">
   <meta name="author" content="<?= htmlspecialchars($current->nick) ?>"/>
