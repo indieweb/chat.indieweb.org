@@ -14,15 +14,14 @@
 
   <li class="divider"></li>
 
-  <!--
-  <li>
-    <form action="http://www.google.com/search" method="get" style="margin-bottom: 0;">
-      <input type="text" name="q" placeholder="Search"/>
-      <input type="submit" value="Search"/>
-      <input type="hidden" name="as_sitesearch" value="indiewebcamp.com/irc"/>
+  <li class="search">
+    <form action="https://indiechat.search.cweiske.de/" method="get">
+      <div style="position:relative">
+        <input type="text" name="q" id="search" placeholder="Search"/>
+        <i class="material-icons">search</i>
+      </div>
     </form>
   </li>
-  -->
   <li>
     <form action="/set-timezone.php" method="post" id="set-timezone-form">
       <div class="input-field col s12">
