@@ -107,6 +107,11 @@ include('templates/header-bar.php');
 
 <div class="logs">
   <div id="top" class="skip"><a href="#bottom">jump to bottom</a></div>
+  <?php if(isset($yesterday) && $yesterday): ?>
+  <div class="hide-on-large-only center-align">
+    <a href="./<?= $yesterday ?>" rel="prev" class="waves-effect waves-light btn">Prev</a>
+  </div>
+  <?php endif; ?>
   <div id="log-lines">
     <?php
     // foreach($results as $line) {
@@ -118,6 +123,11 @@ include('templates/header-bar.php');
     }
     ?>
   </div>
+  <?php if(isset($tomorrow) && $tomorrow): ?>
+  <div class="hide-on-large-only center-align">
+    <a href="./<?= $tomorrow ?>" class="waves-effect waves-light btn">Next</a>
+  </div>
+  <?php endif; ?>
   <div id="bottom" class="skip"><a href="#top">jump to top</a></div>
 </div>
 
