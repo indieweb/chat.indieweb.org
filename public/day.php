@@ -47,9 +47,9 @@ if($tmrw->format('U') > time()) $tomorrow = false;
 $channel = '#'.$_GET['channel'];
 $channel_link = Config::base_url_for_channel($channel);
 
-// TODO: make this work for reals
-if($channel == '#dev' && $start->format('U') < 1467615600) $yesterday = false;
-
+if (!isAfterFirst($channel, $yesterday)) {
+    $yesterday = false;
+}
 $channelName = $channel;
 
 // #indiewebcamp channel was renamed to #indieweb on 2016-07-04
@@ -107,6 +107,11 @@ include('templates/header-bar.php');
 
 <div class="logs">
   <div id="top" class="skip"><a href="#bottom">jump to bottom</a></div>
+  <?php if(isset($yesterday) && $yesterday): ?>
+  <div class="hide-on-large-only center-align">
+    <a href="./<?= $yesterday ?>" rel="prev" class="waves-effect waves-light btn">Prev</a>
+  </div>
+  <?php endif; ?>
   <div id="log-lines">
     <?php
     // foreach($results as $line) {
@@ -118,17 +123,22 @@ include('templates/header-bar.php');
     }
     ?>
   </div>
+  <?php if(isset($tomorrow) && $tomorrow): ?>
+  <div class="hide-on-large-only center-align">
+    <a href="./<?= $tomorrow ?>" class="waves-effect waves-light btn">Next</a>
+  </div>
+  <?php endif; ?>
   <div id="bottom" class="skip"><a href="#top">jump to top</a></div>
 </div>
 
 <?php if(!isset($tomorrow) || !$tomorrow): /* Set the channel name to activate realtime streaming, only when viewing "today" */ ?>
-  <input id="active-channel" type="hidden" value="<?= Config::irc_channel_for_slug($_GET['channel']) ?>" style="display:none;">
+  <input id="active-channel" type="hidden" value="<?= Config::irc_channel_for_slug($_GET['channel']) ?>" style="display:none;"/>
 <?php endif; ?>
 
 <?php include('templates/footer-bar.php'); ?>
 
 <script type="text/javascript" src="/assets/pushstream.js"></script>
-<script type="text/javascript">
+<script type="text/javascript">/*<![CDATA[*/
   if(window.location.hash && window.location.hash != '#top' && window.location.hash != '#bottom') {
     var n = document.getElementById(window.location.hash.replace('#',''));
     n.classList.add('hilite');
@@ -139,7 +149,7 @@ include('templates/header-bar.php');
     var n = document.getElementById(window.location.hash.replace('#',''));
     n.classList.add('hilite');
   }, false);
-</script>
+/*]]>*/</script>
 <?php if(!array_key_exists('timestamp', $_GET) && isset($date) && date('Y-m-d') == $date): ?>
 <script type="text/javascript" src="/assets/log-streaming.js"></script>
 <?php endif; ?>

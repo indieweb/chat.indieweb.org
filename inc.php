@@ -175,6 +175,43 @@ function refreshUsers() {
 	//}
 }
 
+/**
+ * Generate file that contains the date with the first message
+ * in each channel
+ */
+function refreshFirst() {
+    $channels = Config::supported_channels();
+    $dates    = new stdClass();
+
+    foreach ($channels as $channel) {
+        if ($channel == 'indieweb') {
+            $sqlChannels = '"#indieweb","#indiewebcamp"';
+        } else {
+            $sqlChannels = '"' . Config::irc_channel_for_slug($channel) . '"';
+        }
+        $sql = 'SELECT timestamp FROM irclog'
+            . ' WHERE channel IN (' . $sqlChannels . ')'
+            . ' ORDER BY timestamp ASC'
+            . ' LIMIT 1';
+        $stmt = db()->query($sql);
+        $row = $stmt->fetchObject();
+        if (is_object($row)) {
+            $dates->{'#' . $channel} = strtotime(date('Y-m-d', ((int) $row->timestamp / 1000))) * 1000;
+        }
+    }
+    file_put_contents(__DIR__ . '/data/first.json', json_encode($dates));
+}
+
+function isAfterFirst($channel, $date)
+{
+    $data = json_decode(file_get_contents(__DIR__ . '/data/first.json'));
+    if (!isset($data->$channel)) {
+        return false;
+    }
+
+    return strtotime($date) * 1000 >= $data->$channel;
+}
+
 $users = array();
 
 // TODO: Load different user data depending on the channel (mainly for w3c channel)

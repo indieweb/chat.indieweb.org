@@ -1,7 +1,7 @@
 <ul class="side-nav fixed" id="slide-out">
   <li><div class="userView">
-    <img src="/assets/user-bkg.jpg" class="background">
-    <a href="#"><img class="circle" src="/assets/logo/<?= Config::logo_for_channel($channel); ?>"></a>
+    <img src="/assets/user-bkg.jpg" class="background"/>
+    <a href="#"><img class="circle" src="/assets/logo/<?= Config::logo_for_channel($channel); ?>"/></a>
     <a><span class="white-text name" style="font-size: 18pt;"><?= $channelName ?></span></a>
     <a><span class="white-text email"><?= $dateTitle ?></span></a>
   </div></li>
@@ -14,15 +14,14 @@
 
   <li class="divider"></li>
 
-  <!--
-  <li>
-    <form action="http://www.google.com/search" method="get" style="margin-bottom: 0;">
-      <input type="text" name="q" placeholder="Search">
-      <input type="submit" value="Search">
-      <input type="hidden" name="as_sitesearch" value="indiewebcamp.com/irc">
+  <li class="search">
+    <form action="https://indiechat.search.cweiske.de/" method="get">
+      <div style="position:relative">
+        <input type="text" name="q" id="search" placeholder="Search"/>
+        <i class="material-icons">search</i>
+      </div>
     </form>
   </li>
-  -->
   <li>
     <form action="/set-timezone.php" method="post" id="set-timezone-form">
       <div class="input-field col s12">
@@ -31,7 +30,7 @@
             <option value="<?= $t ?>" <?= $t == $tzname ? 'selected="selected"' :'' ?>><?= $t ?></option>
           <?php endforeach; ?>
         </select>
-        <input type="hidden" name="location" value="<?= $_SERVER['REQUEST_URI'] ?>">
+        <input type="hidden" name="location" value="<?= $_SERVER['REQUEST_URI'] ?>"/>
       </div>
     </form>
   </li>

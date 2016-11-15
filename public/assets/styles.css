@@ -30,7 +30,7 @@ li.channel.current {
   background-color: rgb(240,240,240);
 }
 
-#set-timezone-form {
+.side-nav form {
   padding: 10px;
 }
 
@@ -175,10 +175,16 @@ h2 {
   margin: 0;
   padding: 4px 10px;
 }
-#indieweb-header .disabled {
+#indieweb-header .disabled,
+.side-nav.fixed a.disabled {
   color: #ccc;
 }
 
+.side-nav .search i.material-icons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
 
 
 #chat-footer { 
