@@ -39,7 +39,6 @@ h2 {
 }
 
 
-
   a.time {
     color: #999;
     font-weight: normal;
@@ -73,6 +72,8 @@ h2 {
   }
   a {
     color: #222299;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
   .nick, a.author {
     color: #a13d3d;
