@@ -35,7 +35,8 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
 
   if(preg_match('/^\[\[(?<page>.+)\]\](?: (?<type>[!NM]*|delete|restore|upload|moved))? (?<url>[^ ]+) \* (?<user>[^\*]+) \* (?:\((?<size>[+-]\d+)\))?(?:deleted|restored|moved)?(?<comment>.*)/', $line['content'], $match)) {
     $line = format_wiki_line($channel, $line, $match, $mf, $blank_avatar);
-    $who = $line['who'];
+    if(isset($line['who']))
+      $who = $line['who'];
   }
 
   // Old twitter citations  
@@ -47,14 +48,14 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
   }
 
   // New tweets
-  if(preg_match('/\[@([^\]]+)\] (.+) \((http:\/\/twtr\.io\/[^ ]+|https:\/\/twitter\.com\/[^ ]+)\)/', $line['content'], $match)) {
+  if(preg_match('/\[@([^\]]+)\] (.+) \((http:\/\/twtr\.io\/[^ ]+|https:\/\/twitter\.com\/[^ ]+)\)/ms', $line['content'], $match)) {
     $line['type'] = 'twitter';
     $line['content'] = $match[2];
     $permalink = $match[3];
     $avatar = '<div class="avatar"><img src="' . htmlspecialchars(ImageProxy::url('http://twitter.com/' . $match[1] . '/profile_image')) . '" width="20"/></div>';
     $who = $avatar . '<a href="https://twitter.com/' . $match[1] . '" class="author" target="_blank">@<span class="p-name p-nickname">' . $match[1] . '</span></a>';
   }
-
+  
   // Ugly hack for old Loqi ACTIONs
   if($nick == 'Loqi') {
     if(preg_match('/^ACTION (.+)/', $line['content'], $match)) {
