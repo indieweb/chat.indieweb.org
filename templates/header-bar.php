@@ -18,7 +18,7 @@
     <form action="https://indiechat.search.cweiske.de/" method="get">
       <div style="position:relative">
         <input type="text" name="q" id="search" placeholder="Search"/>
-        <i class="material-icons">search</i>
+        <button class="material-icons" type="submit">search</button>
       </div>
     </form>
   </li>
