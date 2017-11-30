@@ -89,8 +89,8 @@ function getViewerTimezone() {
     $tzname = array_key_exists('timezone_view', $_COOKIE) ? $_COOKIE['timezone_view'] : 'US/Pacific';
     $tz = new DateTimeZone($tzname);
   } catch(Exception $e) {
-    $tzname = 'US/Pacific';
-    $tz = new DateTimeZone('US/Pacific');
+    $tzname = 'UTC';
+    $tz = new DateTimeZone('UTC');
   }
   return [$tzname, $tz];
 }
