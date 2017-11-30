@@ -29,8 +29,10 @@ $date = DateTime::createFromFormat('U.u', sprintf('%.06f',$timestamp/1000000));
 $db = new Quartz\DB('data/'.Config::logpath_for_channel($channel), 'r');
 $line = $db->getByDate($date);
 
-if(!$line)
+if(!$line) {
+  header('HTTP/1.1 404 Not Found');
   die('not found');
+}
 
 $dateTitle = $date->format('Y-m-d');
 

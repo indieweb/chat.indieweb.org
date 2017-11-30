@@ -3,11 +3,6 @@ class Config {
   public static $base = 'https://chat.indieweb.org/';
   public static $logpath = './data/freenode/';
 
-  public static $dbhost = '127.0.0.1';
-  public static $dbname = 'logs';
-  public static $dbuser = 'root';
-  public static $dbpass = '';
-
   public static $secret = '';
 
   public static $slack_token = 'xoxp-...';

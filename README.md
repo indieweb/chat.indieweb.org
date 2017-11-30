@@ -7,7 +7,6 @@ This is the source code for the chat logs at https://chat.indieweb.org
 
 * nginx
 * nginx push-stream module
-* MySQL (temporary, being replaced by storing files on disk)
 
 
 

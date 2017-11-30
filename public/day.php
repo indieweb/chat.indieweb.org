@@ -59,12 +59,12 @@ $db = new Quartz\DB('data/'.Config::logpath_for_channel($channel), 'r');
 $results = $db->queryRange(clone $start_utc, clone $end_utc);
 
 
-
+ob_start();
+$num_lines = 0;
 $noindex = true;
 include('templates/header.php');
 include('templates/header-bar.php');
 
-# Render chat logs here
 ?>
 <main>
 
@@ -84,6 +84,7 @@ include('templates/header-bar.php');
       echo '<div class="daymark">'.$start->setTimeZone($tz)->format('Y-m-d').' <span class="tz">'.$tzname.'</span></div>';
     }
     foreach($results as $line) {
+      $num_lines++;
       if($line->date->setTimeZone($tz)->format('Y-m-d') != $lastday->format('Y-m-d')) {
         echo '<div class="daymark">'.$line->date->setTimeZone($tz)->format('Y-m-d').' <span class="tz">'.$tzname.'</span></div>';
       }
@@ -92,10 +93,6 @@ include('templates/header-bar.php');
       $d->setTimeZone($tz);
       $lastday = $d;
     }
-    // while($row=$logs->fetch(PDO::FETCH_OBJ)) {
-    //   $date = DateTime::createFromFormat('U.u', sprintf('%.03f',$row->timestamp/1000));
-    //   echo format_line($channel, $date, $tz, db_row_to_new_log($row));
-    // }
     ?>
   </div>
   <?php if(isset($tomorrow) && $tomorrow): ?>
@@ -132,3 +129,11 @@ include('templates/header-bar.php');
 </main>
 <?php
 include('templates/footer.php');
+
+$output = ob_get_clean();
+
+if($num_lines == 0) {
+  header('HTTP/1.1 404 Not Found');
+}
+
+echo $output;

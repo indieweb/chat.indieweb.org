@@ -8,34 +8,6 @@ require_once('lib/php_calendar.php');
 require_once('lib/format.php');
 require_once('lib/config.php');
 
-function db() {
-	static $db;
-	if(!isset($db)) {
-	    $db = new PDO('mysql:host='.Config::$dbhost.';dbname='.Config::$dbname.'', Config::$dbuser, Config::$dbpass);
-	}
-	return $db;
-}
-
-function db_row_to_new_log($row) {
-  $date = DateTime::createFromFormat('U.u', floor($row->timestamp/1000).'.'.sprintf('%06d',1000*($row->timestamp%1000)));
-
-  $line = new StdClass;
-  $line->type = $row->type == 64 ? 'join' : 'message';
-  $line->timestamp = $date->format('U.u');
-  $line->network = 'irc';
-  $line->server = 'freenode';
-  $line->channel = new StdClass;
-  $line->channel->id = $row->channel;
-  $line->channel->name = $row->channel;
-  $line->author = new StdClass;
-  $line->author->uid = $row->nick;
-  $line->author->nickname = $row->nick;
-  $line->author->name = $row->nick;
-  $line->author->username = $row->nick;
-  $line->content = $row->line;
-  return $line;
-}
-
 function mc() {
   static $m;
   if(!isset($m)) {
@@ -117,6 +89,8 @@ function filterText($text, $channel) {
 
   // Remove `/me ` from the beginning of lines
   $text = preg_replace('/^\/me /', '', $text);
+
+  $text = preg_replace('/({.+})/', '<code>$1</code>', $text);
 
 	$text = preg_replace(Regex_URL::$expression, Regex_URL::$replacement, $text);
 	$text = preg_replace(Regex_Twitter::$expression, Regex_Twitter::$replacement, $text);
@@ -203,6 +177,7 @@ function refreshUsers() {
  * Generate file that contains the date with the first message
  * in each channel
  */
+/* TODO: update to check files on disk and save as YYYY-MM-DD
 function refreshFirst() {
     $channels = Config::supported_channels();
     $dates    = new stdClass();
@@ -225,6 +200,7 @@ function refreshFirst() {
     }
     file_put_contents(__DIR__ . '/data/first.json', json_encode($dates));
 }
+*/
 
 function isAfterFirst($channel, $date)
 {
@@ -233,7 +209,7 @@ function isAfterFirst($channel, $date)
         return false;
     }
 
-    return strtotime($date) * 1000 >= $data->$channel;
+    return strtotime($date) >= strtotime($data->$channel);
 }
 
 $users = array();
