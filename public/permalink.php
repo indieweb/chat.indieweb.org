@@ -9,7 +9,7 @@ if(!in_array($_GET['channel'], Config::supported_channels())) {
 # Pre-load variables required for header
 $permalink = true;
 
-loadUsers();
+loadUsers($_GET['channel']);
 $timezones = loadTimezones();
 
 # Get timezone of viewer from cookie

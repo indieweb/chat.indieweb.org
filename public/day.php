@@ -15,7 +15,7 @@ if($_GET['channel'] == 'pdxbots' && $_SERVER['REMOTE_ADDR'] != '162.213.78.244')
 # Pre-load variables required for header
 $permalink = false;
 
-loadUsers();
+loadUsers($_GET['channel']);
 $timezones = loadTimezones();
 
 # Get timezone of viewer from cookie

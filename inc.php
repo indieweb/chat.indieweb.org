@@ -165,18 +165,29 @@ function trimString($str, $length, $allow_word_break=false) {
 
 
 function refreshUsers() {
-	//if(filemtime('users.json') < time() - 300) {
-		$users = file_get_contents('http://pin13.net/mf2/?url=https%3A%2F%2Findiewebcamp.com%2Firc-people');
-		if(trim($users)) {
-		  $data = json_decode($users);
-		  if($data && property_exists($data, 'items') && count($data->items) && count($data->items[0])) {
-		    $er = fopen('php://stderr', 'w');
-		    fputs($er, 'found ' . count($data->items[0]->children) . ' items'."\n");
-		    fclose($er);
-  			file_put_contents(dirname(__FILE__).'/data/users.json', $users);
-			}
-		}
-	//}
+  $collections = [
+    ['group'=>'indieweb', 'url'=>'https://indieweb.org/irc-people'],
+    ['group'=>'w3c', 'url'=>'https://www.w3.org/wiki/IRC-people']
+  ];
+
+  foreach($collections as $c) {
+  	$parsed = file_get_contents('http://pin13.net/mf2/?url='.urlencode($c['url']));
+  	if(trim($parsed)) {
+  	  $data = json_decode($parsed);
+  	  if($data && property_exists($data, 'items') && count($data->items) && count($data->items[0])) {
+        $item = $data->items[0];
+        if(isset($item->children))
+          $users = $item->children;
+        else
+          $users = $data->items;
+
+  	    $er = fopen('php://stderr', 'w');
+  	    fputs($er, 'found ' . count($users) . ' items'."\n");
+  	    fclose($er);
+  			file_put_contents(dirname(__FILE__).'/data/'.$c['group'].'.json', json_encode($users,JSON_PRETTY_PRINT,JSON_UNESCAPED_SLASHES));
+  		}
+  	}
+  }
 }
 
 /**
@@ -218,19 +229,19 @@ function isAfterFirst($channel, $date)
 
 $users = array();
 
-// TODO: Load different user data depending on the channel (mainly for w3c channel)
-function loadUsers() {
+function loadUsers($channel) {
 	global $users;
-  $filename = dirname(__FILE__).'/data/users.json';
-  if(file_exists($filename)){
-  	$data = json_decode(file_get_contents($filename));
-  	if(property_exists($data, 'items') && property_exists($data->items[0], 'children')) {
-    	foreach($data->items[0]->children as $item) {
+
+  if($group=Config::group_for_channel($channel)) {
+    $filename = dirname(__FILE__).'/data/'.$group.'.json';
+    if(file_exists($filename)){
+    	$data = json_decode(file_get_contents($filename));
+    	foreach($data as $item) {
     		if(in_array('h-card', $item->type)) {
     			$users[] = $item;
     		}
     	}
-  	}
+    }
   }
 }
 

@@ -26,6 +26,24 @@ class Config {
     }
   }
 
+  public static function group_for_channel($channel) {
+    switch($channel) {
+      case '#indieweb':
+      case '#indiewebcamp':
+      case '#dev':
+      case '#meta':
+      case '#wordpress':
+      case '#bridgy':
+      case '#microformats':
+      case '#known':
+        return 'indieweb';
+      case '#social':
+        return 'w3c';
+      default:
+        return false;
+    }
+  }
+
   public static function base_url_for_channel($channel) {
     if($channel == '#indiewebcamp' || $channel == '#indieweb')
       return Config::$base;
