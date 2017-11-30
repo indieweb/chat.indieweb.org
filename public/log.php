@@ -57,3 +57,19 @@ if($params['author']['username'] != '~slackuser' && ($channel=Config::slack_chan
   
 }
   
+// Notify the WebSub hub that there is new content
+$url = Config::base_url_for_channel($params['channel']['name']);
+if(!mc()->get('websub-throttle:'.$url)) {
+
+  $ch = curl_init(Config::$hub);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_POST, true);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+    'hub.mode' => 'publish',
+    'hub.url' => $url
+  ]));
+  curl_exec($ch);
+
+  // throttle notifications to 2 minutes
+  mc()->set('websub-throttle:'.$url, 1, 120);
+}

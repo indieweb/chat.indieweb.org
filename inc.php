@@ -36,6 +36,15 @@ function db_row_to_new_log($row) {
   return $line;
 }
 
+function mc() {
+  static $m;
+  if(!isset($m)) {
+    $m = new Memcached;
+    $m->addServer('127.0.0.1', 11211);
+  }
+  return $m;
+}
+
 class ImageProxy {
 
   public static function url($url) {
