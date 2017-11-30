@@ -25,6 +25,8 @@ $timestamp = $_GET['timestamp'];
 
 
 $date = DateTime::createFromFormat('U.u', sprintf('%.06f',$timestamp/1000000));
+$localdate = clone $date;
+$localdate->setTimeZone($tz);
 
 $db = new Quartz\DB('data/'.Config::logpath_for_channel($channel), 'r');
 $line = $db->getByDate($date);
@@ -62,7 +64,7 @@ include('templates/header-bar.php');
 <main>
   <div class="logs">
     <div id="log-lines" class="featured">
-      <div class="daymark"><?= $date->setTimeZone($tz)->format('Y-m-d') ?> <span class="tz"><?= $tzname ?></span></div>
+      <div class="daymark"><?= $localdate->format('Y-m-d') ?> <span class="tz"><?= $tzname ?></span></div>
       <?= format_line($channel, $date, $tz, $line->data) ?>
     </div>
   </div>
