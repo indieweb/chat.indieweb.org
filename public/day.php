@@ -85,13 +85,13 @@ include('templates/header-bar.php');
     }
     foreach($results as $line) {
       $num_lines++;
-      if($line->date->setTimeZone($tz)->format('Y-m-d') != $lastday->format('Y-m-d')) {
-        echo '<div class="daymark">'.$line->date->setTimeZone($tz)->format('Y-m-d').' <span class="tz">'.$tzname.'</span></div>';
+      $localdate = clone $line->date;
+      $localdate->setTimeZone($tz);
+      if($localdate->format('Y-m-d') != $lastday->format('Y-m-d')) {
+        echo '<div class="daymark">'.$localdate->format('Y-m-d').' <span class="tz">'.$tzname.'</span></div>';
       }
       echo format_line($channel, $line->date, $tz, $line->data);
-      $d = clone $line->date;
-      $d->setTimeZone($tz);
-      $lastday = $d;
+      $lastday = $localdate;
     }
     ?>
   </div>
