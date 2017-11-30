@@ -42,20 +42,25 @@ h2 {
 
   a.time {
     color: #999;
+    font-weight: normal;
   }
   a.hash {
     color: #BBB;
+    font-weight: normal;
     text-decoration: none;
   }
   .line {
     min-height: 22px;
     margin-bottom: 4px;
   }
-  .msg-join, .msg-join a, .msg-leave, .msg-leave a {
+  .msg-join, .msg-join .text a, .msg-leave, .msg-leave a {
     color: #bbb;
   }
-  .msg-wiki, .msg-wiki a, .msg-wiki a.author {
+  .msg-wiki, .msg-wiki .text a, .msg-wiki a.author {
     color: #7e3db4;
+  }
+  .msg-wiki .text a {
+    font-weight: bold;
   }
   .msg-message.emote .text {
     font-style: italic;

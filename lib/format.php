@@ -32,8 +32,7 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
   $timestamp = DateTime::createFromFormat('U.u', $input->timestamp);
   $line['timestamp'] = $timestamp->format('Uu');
   $line['type'] = $input->type;
-
-  if(preg_match('/^\[\[(?<page>.+)\]\](?: (?<type>[!NM]*|delete|restore|upload|moved))? (?<url>[^ ]+) \* (?<user>[^\*]+) \* (?:\((?<size>[+-]\d+)\))?(?:deleted|restored|moved)?(?<comment>.*)/', $line['content'], $match)) {
+  if(preg_match('/^\[\[(?<page>.+)\]\](?: (?<type>[!NM]*|delete|restore|upload|moved))? (?<url>[^ ]+) +\* (?<user>[^\*]+) \* (?:\((?<size>[+-]\d+)\))?(?:uploaded|deleted|restored|moved)?(?<comment>.*)/', $line['content'], $match)) {
     $line = format_wiki_line($channel, $line, $match, $mf, $blank_avatar);
     if(isset($line['who']))
       $who = $line['who'];
@@ -43,16 +42,16 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
   if($timestamp->format('U') < strtotime('2014-01-01') && preg_match('/^https?:\/\/twitter.com\/([^ ]+) /', $line['content'], $match)) {
     $line['type'] = 'twitter';
     $line['content'] = str_replace(array($match[0].':: ',$match[0]), '', $line['content']);
-    $avatar = '<div class="avatar"><img src="' . htmlspecialchars(ImageProxy::url('http://twitter.com/' . $match[1] . '/profile_image')) . '" width="20"/></div>';
-    $who = $avatar . '<a href="http://twitter.com/' . $match[1] . '" class="author ' . ($mf ? 'p-url' : '') . '" target="_blank">@<span class="p-name p-nickname">' . $match[1] . '</span></a>';
+    $avatar = '<div class="avatar"><img src="' . htmlspecialchars(ImageProxy::url('https://twitter.com/' . $match[1] . '/profile_image')) . '" width="20"/></div>';
+    $who = $avatar . '<a href="https://twitter.com/' . $match[1] . '" class="author ' . ($mf ? 'p-url' : '') . '" target="_blank">@<span class="p-name p-nickname">' . $match[1] . '</span></a>';
   }
 
   // New tweets
-  if(preg_match('/\[@([^\]]+)\] (.+) \((http:\/\/twtr\.io\/[^ ]+|https:\/\/twitter\.com\/[^ ]+)\)/ms', $line['content'], $match)) {
+  if(preg_match('/\[@([^\]]+)\] (.+) \((https?:\/\/twtr\.io\/[^ ]+|https?:\/\/twitter\.com\/[^ ]+)\)/ms', $line['content'], $match)) {
     $line['type'] = 'twitter';
     $line['content'] = $match[2];
     $permalink = $match[3];
-    $avatar = '<div class="avatar"><img src="' . htmlspecialchars(ImageProxy::url('http://twitter.com/' . $match[1] . '/profile_image')) . '" width="20"/></div>';
+    $avatar = '<div class="avatar"><img src="' . htmlspecialchars(ImageProxy::url('https://twitter.com/' . $match[1] . '/profile_image')) . '" width="20"/></div>';
     $who = $avatar . '<a href="https://twitter.com/' . $match[1] . '" class="author" target="_blank">@<span class="p-name p-nickname">' . $match[1] . '</span></a>';
   }
   
@@ -117,7 +116,7 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
       
       if($line['type'] == 'twitter' && $permalink) {
         echo ' (<a href="' . $permalink . '" class="u-url" target="_blank">' . preg_replace('/https?:\/\//', '', $permalink) . '</a>)';
-      } elseif($line['type'] == 'wiki') {
+      } elseif($line['type'] == 'wiki' && $line['diff']) {
         echo ' (<a href="' . $line['diff'] . '" class="u-url" target="_blank">view diff</a>)';
       }
     echo '</div>';
@@ -166,7 +165,7 @@ function format_wiki_line($channel, $line, $match, $mf, $blank_avatar) {
     $action = 'edited';
 
   if(in_array($action, array('deleted','restored','uploaded','moved'))) {
-    $line['diff'] = Config::wiki_base($channel) . $match['page'];
+    $line['diff'] = false;
     if(preg_match('/"\[\[(.+)\]\]": (.+)/', $match['comment'], $dmatch)) {
       $match['page'] = str_replace(' ','_',$dmatch[1]);
       $match['comment'] = $dmatch[2];

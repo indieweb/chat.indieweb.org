@@ -18,7 +18,7 @@ $db->close();
 loadUsers();
 
 $tz = new DateTimeZone('UTC');
-$html = format_line($params['channel']['name'], $date, $tz, json_decode($input));
+$html = format_line(Config::irc_channel_to_local_channel($params['channel']['name']), $date, $tz, json_decode($input));
 
 // Publish to the realtime logs
 $ch = curl_init(Config::$base.'__/pub?id=chat');

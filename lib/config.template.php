@@ -14,7 +14,7 @@ class Config {
   public static $slack_hook = 'https://hooks.slack.com/services/XXX/XXX/XXX';
 
   public static function supported_channels() {
-    return ['indieweb','dev','social','microformats','bridgy','known'];
+    return ['indieweb','dev','meta','wordpress','social','microformats','bridgy','known'];
   }
 
   public static function related_channels($channel) {
@@ -22,7 +22,7 @@ class Config {
       case '#social':
         return ['social'];
       default:
-        return ['indieweb','dev','microformats','bridgy','known'];
+        return ['indieweb','dev','wordpress','meta','microformats','bridgy','known'];
     }
   }
 
@@ -48,6 +48,19 @@ class Config {
   	  default:
   	    return '#'.$slug;
   	}
+  }
+
+  public static function irc_channel_to_local_channel($channel) {
+    switch($channel) {
+      case '#indieweb-dev':
+        return '#dev';
+      case '#indieweb-meta':
+        return '#meta';
+      case '#indieweb-wordpress':
+        return '#wordpress';
+      default:
+        return $channel;
+    }
   }
 
   public static function logo_for_channel($channel) {
@@ -126,7 +139,9 @@ class Config {
     switch($channel) {
       case '#indieweb':
       case '#indiewebcamp':
-      case '#indieweb-dev':
+      case '#dev':
+      case '#meta':
+      case '#wordpress':
         return 'https://indieweb.org/';
       case '#microformats':
         return 'http://microformats.org/wiki/';
