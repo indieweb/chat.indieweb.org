@@ -51,7 +51,7 @@ h2 {
     min-height: 22px;
     margin-bottom: 4px;
   }
-  .msg-join, .msg-join a {
+  .msg-join, .msg-join a, .msg-leave, .msg-leave a {
     color: #bbb;
   }
   .msg-wiki, .msg-wiki a, .msg-wiki a.author {
