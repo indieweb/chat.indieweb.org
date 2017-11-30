@@ -97,8 +97,10 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
     echo '<div class="in">';
       echo '<a href="' . $urlInContext . '" class="hash">#</a> ';
     
-      echo '<time class="' . ($mf ? 'dt-published' : '') . '" datetime="' . $date->format('c') . '">';
-        echo '<a href="' . $url . '" class="' . ($mf ? 'u-url' : '') . ' time" >' . $localdate->format('H:i') . '</a>';
+      echo '<time class="' . ($mf ? 'dt-published' : '') . '" datetime="' . $localdate->format('c') . '">';
+        echo '<a href="' . $url . '" class="' . ($mf ? 'u-url' : '') . ' time" title="' . $localdate->format('c') . '">' 
+          . $localdate->format('H:i') 
+        . '</a>';
       echo '</time> ';
 
       echo '<span class="text">';

@@ -157,7 +157,13 @@ h2 {
     height: 10px;
   }
 
-
+.daymark {
+  font-size: 1.2em;
+  border-top: 2px #ccc solid;
+}
+.daymark .tz {
+  color: #888;
+}
 
 #indieweb-header .channels .channel.current {
   background: #e5e5e5;

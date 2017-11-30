@@ -9,8 +9,8 @@ header('Content-Type: text/html; charset=utf-8');
 
   <meta name="keywords" content="<?= htmlspecialchars($channelName) ?>"/>
   <?php if($permalink): ?>
-  <meta name="description" content="<?= htmlspecialchars($current->nick . ': ' . $current->line) ?>">
-  <meta name="author" content="<?= htmlspecialchars($current->nick) ?>"/>
+  <meta name="description" content="<?= htmlspecialchars($current->author->nickname . ': ' . $current->content) ?>">
+  <meta name="author" content="<?= htmlspecialchars($current->author->nickname) ?>"/>
   <?php endif; ?>
   <?php if(isset($userUrl) && $userUrl): ?>
   <link rel="author" href="<?= htmlspecialchars($userUrl) ?>"/>

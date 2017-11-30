@@ -23,23 +23,22 @@ list($tzname, $tz) = getViewerTimezone();
 $utc = new DateTimeZone('UTC');
 
 
-
 # Get the start/end times for this day
-$start = new DateTime($_GET['date'].' 00:00:00', $tz);
+$start = new DateTime($_GET['date'].' 00:00:00', $utc);
+$start->setTimeZone($tz);
 $date = clone $start;
-$end = new DateTime($_GET['date'].' 23:59:59', $tz);
+$end = new DateTime($_GET['date'].' 23:59:59', $utc);
+$end->setTimeZone($tz);
 
-$start_utc = new DateTime($_GET['date'].' 00:00:00', $tz);
-$start_utc->setTimeZone($utc);
-$end_utc = new DateTime($_GET['date'].' 23:59:59', $tz);
-$end_utc->setTimeZone($utc);
+$start_utc = new DateTime($_GET['date'].' 00:00:00', $utc);
+$end_utc = new DateTime($_GET['date'].' 23:59:59', $utc);
 
-$dateTitle = $start->format('Y-m-d');
+$dateTitle = $start_utc->format('Y-m-d');
 
-$tmrw = new DateTime($_GET['date'].' 00:00:00', $tz);
+$tmrw = new DateTime($_GET['date'].' 00:00:00', $utc);
 $tmrw->add(new DateInterval('P1D'));
 $tomorrow = $tmrw->format('Y-m-d');
-$ystr = new DateTime($_GET['date'].' 00:00:00', $tz);
+$ystr = new DateTime($_GET['date'].' 00:00:00', $utc);
 $ystr->sub(new DateInterval('P1D'));
 $yesterday = $ystr->format('Y-m-d');
 if($tmrw->format('U') > time()) $tomorrow = false;
@@ -56,44 +55,10 @@ $channelName = $channel;
 if($start->format('U') < 1467615600 && $channelName == '#indieweb') $channelName = '#indiewebcamp';
 
 
-#$db = new Quartz\DB(Config::logpath_for_channel($channel), 'r');
-#$results = $db->queryRange(clone $start, clone $end);
+$db = new Quartz\DB('data/'.Config::logpath_for_channel($channel), 'r');
+$results = $db->queryRange(clone $start_utc, clone $end_utc);
 
 
-if($channel == '#indieweb')
-  $query_channels = ['#indieweb','#indiewebcamp'];
-else
-  $query_channels = [Config::irc_channel_for_slug($_GET['channel'])];
-
-if($channel == '#indieweb')
-  $query_channels = '"#indieweb","#indiewebcamp"';
-else
-  $query_channels = '"'.Config::irc_channel_for_slug($_GET['channel']).'"';
-
-$logs = db()->prepare('SELECT * FROM irclog 
-  WHERE channel IN ('.$query_channels.')
-  AND timestamp >= :min AND timestamp < :max AND hide=0 
-  ORDER BY timestamp');
-$logs->bindValue(':min', $start_utc->format('U')*1000);
-$logs->bindValue(':max', $end_utc->format('U')*1000);
-$logs->execute();
-
-
-// If there is no tomorrow, then it is today
-if(!isset($tomorrow) || !$tomorrow) {
-  // Never cache today
-  header('Cache-Control: no-cache, no-store, must-revalidate');
-} else {
-  header('Last-Modified: '.$end_utc->format('r'));
-  header('Cache-Control: max-age=2592000');
-
-  if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
-    if(strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $end_utc->format('U')) {
-      header('HTTP/1.1 304 Not Modified');
-      die();
-    }
-  }
-}
 
 $noindex = true;
 include('templates/header.php');
@@ -114,13 +79,23 @@ include('templates/header-bar.php');
   <?php endif; ?>
   <div id="log-lines">
     <?php
-    // foreach($results as $line) {
-    //   echo format_line($channel, $line->date, $tz, $line->data);
-    // }
-    while($row=$logs->fetch(PDO::FETCH_OBJ)) {
-      $date = DateTime::createFromFormat('U.u', sprintf('%.03f',$row->timestamp/1000));
-      echo format_line($channel, $date, $tz, db_row_to_new_log($row));
+    $lastday = $start;
+    if($lastday->format('Y-m-d') != $start_utc->format('Y-m-c')) {
+      echo '<div class="daymark">'.$start->setTimeZone($tz)->format('Y-m-d').' <span class="tz">'.$tzname.'</span></div>';
     }
+    foreach($results as $line) {
+      if($line->date->setTimeZone($tz)->format('Y-m-d') != $lastday->format('Y-m-d')) {
+        echo '<div class="daymark">'.$line->date->setTimeZone($tz)->format('Y-m-d').' <span class="tz">'.$tzname.'</span></div>';
+      }
+      echo format_line($channel, $line->date, $tz, $line->data);
+      $d = clone $line->date;
+      $d->setTimeZone($tz);
+      $lastday = $d;
+    }
+    // while($row=$logs->fetch(PDO::FETCH_OBJ)) {
+    //   $date = DateTime::createFromFormat('U.u', sprintf('%.03f',$row->timestamp/1000));
+    //   echo format_line($channel, $date, $tz, db_row_to_new_log($row));
+    // }
     ?>
   </div>
   <?php if(isset($tomorrow) && $tomorrow): ?>
