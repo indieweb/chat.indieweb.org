@@ -42,7 +42,7 @@ if(!array_key_exists('email', $_POST)):
   ?>
   <h1>Welcome to IndieWebCamp!</h1>
   <p>Enter your email address to be invited to the Slack gateway!</p>
-  <p>Slack is just one way you can join the IndieWebCamp chat room. You can also join via <a href="https://indiewebcamp.com/IRC">IRC</a> on freenode.net, as well as from our <a href="https://indiewebcamp.com/irc/today#bottom">web interface</a>.</p>
+  <p>Slack is just one way you can join the IndieWebCamp chat room. You can also join via <a href="https://indieweb.org/discuss">IRC</a> on freenode.net, as well as from our <a href="https://indieweb.org/irc/today#bottom">web interface</a>.</p>
   <form action="/slack" method="post" class="pure-form">
     <label>Email:</label>
     <input type="email" name="email" placeholder="" />
@@ -66,7 +66,9 @@ $result = curl_exec($ch);
   <h1>Check your email!</h1>
   <p>You should have an invitation in your inbox now!</p>
 
-
+<!--
+<?= $result ?>
+-->
 
   </div>
 </body>
