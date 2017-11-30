@@ -109,7 +109,7 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
 
         echo '<span class="' . ($mf ? 'e-content p-name' : '') . '">';
           if(!in_array($line['type'], ['join','leave'])) {
-            echo filterText($line['content']);
+            echo filterText($line['content'], $channel);
           } else {
             echo $nick . ' ' . ($line['type'] == 'join' ? 'joined' : 'left') . ' the channel';
           }

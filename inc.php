@@ -95,7 +95,7 @@ function getViewerTimezone() {
   return [$tzname, $tz];
 }
 
-function filterText($text) {
+function filterText($text, $channel) {
 	/*
 	for($i=0; $i<strlen($text); $i++) {
 		if(ord($text[$i]) < 32)
@@ -111,7 +111,11 @@ function filterText($text) {
 
 	$text = preg_replace(Regex_URL::$expression, Regex_URL::$replacement, $text);
 	$text = preg_replace(Regex_Twitter::$expression, Regex_Twitter::$replacement, $text);
-	$text = preg_replace(Regex_WikiPage::$expression, Regex_WikiPage::$replacement, $text);
+
+  if($b=Config::wiki_base($channel)) {
+    $wikireplace = str_replace('{{wikibase}}', $b, Regex_WikiPage::$replacement);
+  	$text = preg_replace(Regex_WikiPage::$expression, $wikireplace, $text);
+  }
 
   // Expand Loqi memes
   $text = preg_replace('/(?<!\")(http:\/\/meme\.loqi\.me\/m\/[a-zA-Z0-9_]+\.(jpg|gif|png))/', '$1<br><img src="$1" style="max-width: 200px; vertical-align: top; margin-left: 80px;">', $text);
