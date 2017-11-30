@@ -86,7 +86,7 @@ class ImageProxy {
 
 function getViewerTimezone() {
   try {
-    $tzname = array_key_exists('timezone_view', $_COOKIE) ? $_COOKIE['timezone_view'] : 'US/Pacific';
+    $tzname = array_key_exists('timezone_view', $_COOKIE) ? $_COOKIE['timezone_view'] : 'UTC';
     $tz = new DateTimeZone($tzname);
   } catch(Exception $e) {
     $tzname = 'UTC';
