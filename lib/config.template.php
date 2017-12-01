@@ -1,9 +1,10 @@
 <?php
 class Config {
   public static $base = 'https://chat.indieweb.org/';
-  public static $logpath = './data/freenode/';
 
   public static $secret = '';
+
+  public static $hub = 'https://switchboard.p3k.io/';
 
   public static $slack_token = 'xoxp-...';
   public static $slack_hook = 'https://hooks.slack.com/services/XXX/XXX/XXX';
