@@ -167,7 +167,7 @@ function refreshUsers() {
   	    $er = fopen('php://stderr', 'w');
   	    fputs($er, 'found ' . count($users) . ' items'."\n");
   	    fclose($er);
-  			file_put_contents(dirname(__FILE__).'/data/'.$c['group'].'.json', json_encode($users,JSON_PRETTY_PRINT,JSON_UNESCAPED_SLASHES));
+  			file_put_contents(dirname(__FILE__).'/data/'.$c['group'].'.json', json_encode($users,JSON_PRETTY_PRINT+JSON_UNESCAPED_SLASHES));
   		}
   	}
   }
