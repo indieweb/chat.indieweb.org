@@ -289,8 +289,8 @@ if(chat_session=get_session_from_cookie()) {
       document.getElementById('join_prompt').classList.add('hidden');
       document.getElementById('signin').classList.add('hidden');
       document.getElementById('chat').classList.remove('hidden');
-      window.scrollTo(0,document.body.offsetHeight);
       activate_chat_field();
+      window.scrollTo(0,document.body.offsetHeight);
     } else {
       set_session("");
     }

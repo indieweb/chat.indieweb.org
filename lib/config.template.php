@@ -16,6 +16,10 @@ class Config {
     return ['indieweb','dev','meta','wordpress','social','microformats','bridgy','known'];
   }
 
+  public static function supported_chat_channels() {
+    return ['indieweb','dev','microformats','bridgy','known','wordpress','meta'];
+  }
+
   public static function related_channels($channel) {
     switch($channel) {
       case '#social':
