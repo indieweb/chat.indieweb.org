@@ -165,6 +165,7 @@ document.getElementById('close_notice_btn').addEventListener('click', function()
 function activate_chat_field() {
   document.getElementById('signin').classList.add('hidden');
   document.getElementById('chat').classList.remove('hidden');
+  document.querySelector('.logs').classList.add('active-chat');
   var message_key_listener = function(e) {
     if(e.keyCode == 13) {
       console.log("Sending to IRC: "+message_box.value);

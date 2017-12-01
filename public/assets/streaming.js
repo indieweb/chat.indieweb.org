@@ -19,7 +19,7 @@ pushstream.onmessage = function(data,id,channel) {
     line.innerHTML = html;
 
     // Format the timestamp in the display timezone
-    var timestamp = line.querySelector(".dt-published").attributes['datetime'].value;
+    var timestamp = line.querySelector("time").attributes['datetime'].value;
     var displayTime = moment(timestamp).utcOffset(document.getElementById('tz-offset').value).format("hh:mm");
     line.querySelector(".dt-published a").innerText = displayTime;
 

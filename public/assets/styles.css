@@ -110,6 +110,9 @@ h2 {
   .logs {
     padding: 4px 10px 16px 10px;
   }
+  .logs.active-chat {
+    padding-bottom: 50px;
+  }
   
   .hilite .in {
     background-color: #fffdd0;
