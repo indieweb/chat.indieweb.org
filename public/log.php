@@ -17,10 +17,12 @@ if($params['channel']['name'] !== '#indieweb-chat') {
   $db->close();
 }
 
-loadUsers();
+$local_channel = Config::irc_channel_to_local_channel($params['channel']['name']);
+
+loadUsers($local_channel);
 
 $tz = new DateTimeZone('UTC');
-$html = format_line(Config::irc_channel_to_local_channel($params['channel']['name']), $date, $tz, json_decode($input));
+$html = format_line($local_channel, $date, $tz, json_decode($input));
 
 if($params['channel']['name'] !== '#indieweb-chat') {
 
