@@ -16,11 +16,17 @@ if(array_key_exists('bookmark', $_GET)) {
 
 if(array_key_exists('HTTP_REFERER', $_SERVER) && strpos($_SERVER['HTTP_REFERER'], '?bookmark') !== false) {
 	?>
-	<title>#<?= $channel ?></title>
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<style>body { font-family: sans-serif; }</style>
-  <link rel="apple-touch-icon-precomposed" href="/assets/logo/<?= Config::logo_for_channel($channel); ?>">
-	<p>Bookmark this page or add to your home screen! When you visit it again, it will redirect you to today's logs.</p>
+  <html>
+  <head>
+  	<title>#<?= $channel ?></title>
+	  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="apple-touch-icon-precomposed" href="/assets/logo/<?= Config::logo_for_channel('#'.$channel); ?>">
+	  <style>body { font-family: sans-serif; }</style>
+  </head>
+  <body>
+  	<p>Bookmark this page or add to your home screen! When you visit it again, it will redirect you to today's logs.</p>
+  </body>
+  </html>
 	<?php
 	die();
 }
