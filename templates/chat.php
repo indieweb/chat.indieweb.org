@@ -235,12 +235,13 @@ function send(text) {
   xhr.open('POST', encodeURI('/send.php?action=input'));
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onload = function() {
-    if (xhr.status === 200) {
+    var response = JSON.parse(xhr.responseText);
+    if (xhr.status === 200 && response.username) {
       console.log("sent");
       message_box.value = '';
     }
     else {
-      alert('Request failed.  Returned status of ' + xhr.status);
+      alert('Request failed: ' + response.error);
     }
   };
   xhr.send('user_name=' + encodeURIComponent(nickname) 
