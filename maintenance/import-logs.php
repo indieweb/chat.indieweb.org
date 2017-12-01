@@ -11,43 +11,52 @@ $start = time();
 
 
 $channels = [
-  // '#indiewebcamp' => [
-  //   'path' => 'freenode/#indieweb',
-  //   'lastday' => '2016-07-10',
-  //   'server' => 'freenode',
-  // ],
-  // '#indieweb' => [
-  //   'path' => 'freenode/#indieweb',
-  //   'lastday' => '2016-07-10',
-  //   'server' => 'freenode',
-  // ],
-  // '#indieweb-dev' => [
-  //   'path' => 'freenode/#indieweb-dev',
-  //   'lastday' => '2016-07-10',
-  //   'server' => 'freenode',
-  // ],
-  // '#bridgy' => [
-  //   'path' => 'freenode/#bridgy',
-  //   'lastday' => '2016-07-10',
-  //   'server' => 'freenode',
-  // ],
-  // '#knownchat' => [
-  //   'path' => 'freenode/#knownchat',
-  //   'lastday' => '2016-07-10',
-  //   'server' => 'freenode',
-  // ],
-  // '#social' => [
-  //   'path' => 'w3c/#social',
-  //   'lastday' => '2016-07-13',
-  //   'server' => 'w3c',
-  // ]
+  '#indiewebcamp' => [
+    'path' => 'freenode/#indieweb',
+    'server' => 'freenode',
+  ],
+  '#indieweb' => [
+    'path' => 'freenode/#indieweb',
+    'server' => 'freenode',
+  ],
+  '#indieweb-dev' => [
+    'path' => 'freenode/#indieweb-dev',
+    'server' => 'freenode',
+  ],
+  '#indieweb-wordpress' => [
+    'path' => 'freenode/#indieweb-wordpress',
+    'server' => 'freenode',
+  ],
+  '#indieweb-meta' => [
+    'path' => 'freenode/#indieweb-meta',
+    'server' => 'freenode',
+  ],
+  '#bridgy' => [
+    'path' => 'freenode/#bridgy',
+    'server' => 'freenode',
+  ],
+  '#knownchat' => [
+    'path' => 'freenode/#knownchat',
+    'server' => 'freenode',
+  ],
+  '#social' => [
+    'path' => 'w3c/#social',
+    'server' => 'w3c',
+  ]
+  '#microformats' => [
+    'path' => 'freenode/#microformats',
+    'server' => 'freenode',
+  ],
 ];
 
-$batch = 2000;
-$continue = true;
-$last = false;
-
 foreach($channels as $channel=>$chinfo) {
+
+  echo "=====================\n";
+  echo $channel."\n";
+
+  $batch = 2000;
+  $continue = true;
+  $last = false;
 
   $db = new Quartz\DB('data/'.$chinfo['path'], 'w');
 
@@ -55,7 +64,8 @@ foreach($channels as $channel=>$chinfo) {
     $rows = ORM::for_table('irclog')
       ->where_gt('timestamp', $last)
       ->where('channel', $channel)
-      ->where_lt('timestamp', strtotime($chinfo['lastday'].' 23:59:59').'999')
+      // ->where_gt('timestamp', strtotime('2017-10-10T00:00:00+0000').'000')
+      // ->where_lt('timestamp', strtotime('2012-01-01T00:00:00+0000').'000')
       ->order_by_asc('timestamp')
       ->limit($batch)
       ->find_many();
