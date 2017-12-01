@@ -9,6 +9,9 @@ class Config {
   public static $slack_token = 'xoxp-...';
   public static $slack_hook = 'https://hooks.slack.com/services/XXX/XXX/XXX';
 
+  public static $web_gateway_url = 'http://localhost:9000/';
+  public static $web_gateway_token = '....';
+
   public static function supported_channels() {
     return ['indieweb','dev','meta','wordpress','social','microformats','bridgy','known'];
   }
