@@ -16,13 +16,10 @@ if(array_key_exists('bookmark', $_GET)) {
 
 if(array_key_exists('HTTP_REFERER', $_SERVER) && strpos($_SERVER['HTTP_REFERER'], '?bookmark') !== false) {
 	?>
-	<title>IndieWebCamp IRC</title>
+	<title>#<?= $channel ?></title>
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<style>body { font-family: sans-serif; }</style>
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/irc/apple-touch-icon-57x57-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/irc/apple-touch-icon-72x72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/irc/apple-touch-icon-114x114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/irc/apple-touch-icon-144x144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="/assets/logo/<?= Config::logo_for_channel($channel); ?>">
 	<p>Bookmark this page or add to your home screen! When you visit it again, it will redirect you to today's logs.</p>
 	<?php
 	die();

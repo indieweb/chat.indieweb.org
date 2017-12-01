@@ -36,5 +36,8 @@ header('Content-Type: text/html; charset=utf-8');
   <link href="https://webmention.io/indiewebcamp/webmention" rel="webmention"/>
   <script src="/assets/pushstream.js"></script>
   <script src="/assets/streaming.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" href="/assets/logo/<?= Config::logo_for_channel($channel); ?>">
+
 </head>
 <body>
