@@ -243,7 +243,10 @@ function send(text) {
       alert('Request failed.  Returned status of ' + xhr.status);
     }
   };
-  xhr.send('user_name=' + encodeURIComponent(nickname) + '&text=' + encodeURIComponent(text) + '&channel=' + encodeURIComponent(document.getElementById('active-channel').value));
+  xhr.send('user_name=' + encodeURIComponent(nickname) 
+    + '&text=' + encodeURIComponent(text) 
+    + '&session=' + encodeURIComponent(chat_session)
+    + '&channel=' + encodeURIComponent(document.getElementById('active-channel').value));
 }
 function join(nick) {
   xhr = new XMLHttpRequest();
