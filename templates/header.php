@@ -24,6 +24,7 @@ header('Content-Type: text/html; charset=utf-8');
 
   <link rel="stylesheet" type="text/css" href="/materialize/css/materialize.min.css"/>
   <script src="/materialize/js/materialize.min.js"></script>
+  <script src="/assets/moment.min.js"></script>
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 

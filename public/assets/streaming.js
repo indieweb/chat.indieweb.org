@@ -17,6 +17,12 @@ pushstream.onmessage = function(data,id,channel) {
     var autoScroll = (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
     var line = document.createElement('div');
     line.innerHTML = html;
+
+    // Format the timestamp in the display timezone
+    var timestamp = line.querySelector(".dt-published").attributes['datetime'].value;
+    var displayTime = moment(timestamp).utcOffset(document.getElementById('tz-offset').value).format("hh:mm");
+    line.querySelector(".dt-published a").innerText = displayTime;
+
     document.getElementById('log-lines').appendChild(line.childNodes[0]);
     // Auto-scroll if the window is already scrolled to the bottom
     if(autoScroll) {
