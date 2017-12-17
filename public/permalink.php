@@ -38,7 +38,6 @@ if(!$line) {
 
 $dateTitle = $date->format('Y-m-d');
 
-
 header('Last-Modified: '.date('r', $timestamp/1000000));
 header('Cache-Control: max-age=2592000');
 
@@ -56,6 +55,11 @@ if($line->type == 'join') {
 $current = $line->data;
 if($current->author && property_exists($current->author, 'url') && $current->author->url) {
   $userUrl = $current->author->url;
+}
+
+if(property_exists($current, 'deleted')) {
+  header('HTTP/1.1 410 Gone');
+  die('deleted');
 }
 
 include('templates/header.php');

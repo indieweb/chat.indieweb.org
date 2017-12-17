@@ -84,14 +84,16 @@ include('templates/header-bar.php');
       echo '<div class="daymark">'.$start->setTimeZone($tz)->format('Y-m-d').' <span class="tz">'.$tzname.'</span></div>';
     }
     foreach($results as $line) {
-      $num_lines++;
-      $localdate = clone $line->date;
-      $localdate->setTimeZone($tz);
-      if($localdate->format('Y-m-d') != $lastday->format('Y-m-d')) {
-        echo '<div class="daymark">'.$localdate->format('Y-m-d').' <span class="tz">'.$tzname.'</span></div>';
+      if(!property_exists($line->data, 'deleted')) {
+        $num_lines++;
+        $localdate = clone $line->date;
+        $localdate->setTimeZone($tz);
+        if($localdate->format('Y-m-d') != $lastday->format('Y-m-d')) {
+          echo '<div class="daymark">'.$localdate->format('Y-m-d').' <span class="tz">'.$tzname.'</span></div>';
+        }
+        echo format_line($channel, $line->date, $tz, $line->data);
+        $lastday = $localdate;
       }
-      echo format_line($channel, $line->date, $tz, $line->data);
-      $lastday = $localdate;
     }
     ?>
   </div>
