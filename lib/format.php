@@ -32,6 +32,11 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
   $timestamp = DateTime::createFromFormat('U.u', $input->timestamp);
   $line['timestamp'] = $timestamp->format('Uu');
   $line['type'] = $input->type;
+  $hidden = false;
+  if (substr($line['type'], 0, 7) === 'hidden-') {
+    $hidden = true;
+    $line['type'] = substr($line['type'], 7);
+  }
   if(preg_match('/^\[\[(?<page>.+)\]\](?: (?<type>[!NM]*|delete|restore|upload|moved))? (?<url>[^ ]+) +\* (?<user>[^\*]+) \* (?:\((?<size>[+-]\d+)\))?(?:uploaded|deleted|restored|moved)?(?<comment>.*)/', $line['content'], $match)) {
     $line = format_wiki_line($channel, $line, $match, $mf, $blank_avatar);
     if(isset($line['who']))
@@ -92,7 +97,7 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
   $mf = $mf && !in_array($line['type'], ['join','leave']);
 
 
-  echo '<div id="t' . $line['timestamp'] . '" class="' . ($mf ? 'h-entry' : '') . ' line msg-' . $line['type'] . ' ' . implode(' ', $classes) . '">';
+  echo '<div id="t' . $line['timestamp'] . '" class="' . ($mf ? 'h-entry' : '') . ' line msg-' . $line['type'] . ' ' . implode(' ', $classes) . '"' . ($hidden ? ' hidden' : '') . '>';
 
     echo '<div class="in">';
       echo '<a href="' . $urlInContext . '" class="hash">#</a> ';
