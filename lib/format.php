@@ -25,8 +25,15 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
       . '<span class="' . ($mf ? 'p-nickname p-name' : '') . '">' . $nick . '</span>'
       . '</span>';
   }
-      
-  $line['content'] = stripIRCControlChars($input->content);
+
+  if(property_exists($input, 'deleted')) {
+    $line['content'] = '';
+    $who = '';
+    $deleted = true;
+  } else {
+    $line['content'] = stripIRCControlChars($input->content);
+    $deleted = false;
+  }
 
 
   $timestamp = DateTime::createFromFormat('U.u', $input->timestamp);
@@ -89,8 +96,10 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
   if(isMeMessage($line['content']))
     $classes[] = 'emote';
 
-  $mf = $mf && !in_array($line['type'], ['join','leave']);
+  if($deleted) 
+    $classes[] = 'deleted';
 
+  $mf = $mf && !in_array($line['type'], ['join','leave']);
 
   echo '<div id="t' . $line['timestamp'] . '" class="' . ($mf ? 'h-entry' : '') . ' line msg-' . $line['type'] . ' ' . implode(' ', $classes) . '">';
 
@@ -104,7 +113,7 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
       echo '</time> ';
 
       echo '<span class="text">';
-        if(!in_array($line['type'], ['join','leave']))
+        if(!in_array($line['type'], ['join','leave']) && !$deleted)
           echo '<span class="nick' . ($mf ? ' p-author h-card' : '') . '">' . $who . '</span> ';
 
         echo '<span class="' . ($mf ? 'e-content p-name' : '') . '">';
@@ -122,8 +131,12 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
         echo ' (<a href="' . $line['diff'] . '" class="u-url" target="_blank">view diff</a>)';
       }
     echo '</div>';
+
+    if($deleted) {
+      echo '<time class="dt-deleted" datetime="'.$localdate->format('c').'"></time>';
+    }
     
-  echo "</div>\n";
+  echo "</div>\n\n";
 
   return ob_get_clean();
 }

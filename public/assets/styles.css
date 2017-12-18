@@ -52,6 +52,9 @@ h2 {
     min-height: 22px;
     margin-bottom: 4px;
   }
+  .line.deleted {
+    display: none;
+  }
   .msg-join, .msg-join .text a, .msg-leave, .msg-leave a {
     color: #bbb;
   }
