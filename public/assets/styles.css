@@ -55,6 +55,9 @@ h2 {
   .line.deleted {
     display: none;
   }
+  .line .text span {
+    word-wrap: break-word;
+  }
   .msg-join, .msg-join .text a, .msg-leave, .msg-leave a {
     color: #bbb;
   }
