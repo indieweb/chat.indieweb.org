@@ -51,5 +51,6 @@ header('Content-Type: text/html; charset=utf-8');
     }
   }
   </script>
+  <link rel="search" title="search chat.indieweb.org" type="application/opensearchdescription+xml" href="/opensearchdescription.php"/>
 </head>
 <body>
