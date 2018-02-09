@@ -48,6 +48,9 @@ h2 {
     font-weight: normal;
     text-decoration: none;
   }
+  a.hash-join, a.hash-leave {
+    opacity: 0;
+  }
   .line {
     min-height: 22px;
     margin-bottom: 4px;

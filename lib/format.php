@@ -104,12 +104,17 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
   echo '<div id="t' . $line['timestamp'] . '" class="' . ($mf ? 'h-entry' : '') . ' line msg-' . $line['type'] . ' ' . implode(' ', $classes) . '">';
 
     echo '<div class="in">';
-      echo '<a href="' . $urlInContext . '" class="hash">#</a> ';
+      if(!in_array($line['type'], ['join','leave']))
+        echo '<a href="' . $urlInContext . '" class="hash">#</a> ';
+      else
+        echo '<a class="hash hash-'.$line['type'].'">#</a> ';
     
       echo '<time class="' . ($mf ? 'dt-published' : '') . '" datetime="' . $localdate->format('c') . '">';
-        echo '<a href="' . $url . '" class="' . ($mf ? 'u-url' : '') . ' time" title="' . $localdate->format('c') . '">' 
-          . $localdate->format('H:i') 
-        . '</a>';
+        if(!in_array($line['type'], ['join','leave']))
+          echo '<a href="' . $url . '" class="' . ($mf ? 'u-url' : '') . ' time" title="' . $localdate->format('c') . '">';
+        echo $localdate->format('H:i');
+        if(!in_array($line['type'], ['join','leave']))
+          echo '</a>';
       echo '</time> ';
 
       echo '<span class="text">';
