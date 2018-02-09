@@ -71,7 +71,7 @@ include('templates/header-bar.php');
 <h2 class="date"><span class="channel-name"><?= $channelName ?></span> <?= $dateTitle ?></h2>
 
 <div class="logs">
-  <div id="top" class="skip"><a href="#bottom">jump to bottom</a></div>
+  <!-- <div id="top" class="skip"><a href="#bottom">jump to bottom</a></div> -->
   <?php if(isset($yesterday) && $yesterday): ?>
   <div class="hide-on-large-only center-align">
     <a href="./<?= $yesterday ?>" rel="prev" class="waves-effect waves-light btn">Prev</a>
@@ -119,7 +119,7 @@ include('templates/header-bar.php');
     <a href="./<?= $tomorrow ?>" class="waves-effect waves-light btn">Next</a>
   </div>
   <?php endif; ?>
-  <div id="bottom" class="skip"><a href="#top">jump to top</a></div>
+  <!-- <div id="bottom" class="skip"><a href="#top">jump to top</a></div> -->
 </div>
 
 <?php if(!isset($tomorrow) || !$tomorrow): /* Set the channel name to activate realtime streaming, only when viewing "today" */ ?>
