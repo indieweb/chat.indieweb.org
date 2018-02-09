@@ -39,5 +39,17 @@ header('Content-Type: text/html; charset=utf-8');
 
   <link rel="apple-touch-icon-precomposed" href="/assets/logo/<?= Config::logo_for_channel($channel); ?>">
 
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "url": "<?= Config::$base ?>",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://indiechat.search.cweiske.de/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
 </head>
 <body>
