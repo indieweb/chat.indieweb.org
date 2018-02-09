@@ -90,6 +90,10 @@ include('templates/header-bar.php');
       $localdate = clone $line->date;
       $localdate->setTimeZone($tz);
       if($localdate->format('Y-m-d') != $lastday->format('Y-m-d')) {
+        if(count($cluster)) {
+          echo render_cluster($cluster);
+          $cluster = [];
+        }
         echo '<div class="daymark">'.$localdate->format('Y-m-d').' <span class="tz">'.$tzname.'</span></div>';
       }
       $current = format_line($channel, $line->date, $tz, $line->data);
