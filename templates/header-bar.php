@@ -6,6 +6,25 @@
     <a><span class="white-text email"><?= $dateTitle ?></span></a>
   </div></li>
 
+  <li style="display: flex; flex-direction: row;">
+    <div style="flex: 1 1;">
+      <?php if(isset($yesterday) && $yesterday): ?>
+        <a href="./<?= $yesterday ?>" rel="prev">Prev</a>
+      <?php else: ?>
+        <a class="disabled">Prev</a>
+      <?php endif; ?>
+    </div>
+    <div style="flex: 1 1;">
+      <?php if(isset($tomorrow) && $tomorrow): ?>
+        <a href="./<?= $tomorrow ?>" rel="next">Next</a>
+      <?php else: ?>
+        <a class="disabled">Next</a>
+      <?php endif; ?>
+    </div>
+  </li>
+
+  <li class="divider"></li>
+
   <?php foreach(Config::related_channels($channel) as $c): ?>
     <li class="channel <?= ($channel == '#'.$c ? 'current' : '') ?>" data-channel="<?= Config::irc_channel_for_slug($c) ?>">
       <a href="<?= Config::base_url_for_channel($c) ?>">#<?= $c ?></a>
@@ -33,20 +52,6 @@
         <input type="hidden" name="location" value="<?= $_SERVER['REQUEST_URI'] ?>"/>
       </div>
     </form>
-  </li>
-  <li>
-    <?php if(isset($yesterday) && $yesterday): ?>
-      <a href="./<?= $yesterday ?>" rel="prev">Prev</a>
-    <?php else: ?>
-      <a class="disabled">Prev</a>
-    <?php endif; ?>
-  </li>
-  <li>
-    <?php if(isset($tomorrow) && $tomorrow): ?>
-      <a href="./<?= $tomorrow ?>" rel="next">Next</a>
-    <?php else: ?>
-      <a class="disabled">Next</a>
-    <?php endif; ?>
   </li>
 
 </ul>
