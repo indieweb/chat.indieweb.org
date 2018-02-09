@@ -61,6 +61,23 @@
     <div class="nav-wrapper">
       <a href="#" class="brand-logo"><?= $channelName ?></a>
       <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+
+      <ul class="right">
+        <li>
+          <?php if(isset($yesterday) && $yesterday): ?>
+            <a href="./<?= $yesterday ?>" rel="prev">Prev</a>
+          <?php else: ?>
+            <a class="disabled">Prev</a>
+          <?php endif; ?>
+        </li>
+        <li>
+          <?php if(isset($tomorrow) && $tomorrow): ?>
+            <a href="./<?= $tomorrow ?>" rel="next">Next</a>
+          <?php else: ?>
+            <a class="disabled">Next</a>
+          <?php endif; ?>
+        </li>
+      </ul>
     </div>
   </nav>
 </div>
