@@ -83,6 +83,8 @@ include('templates/header-bar.php');
     if($lastday->format('Y-m-d') != $start_utc->format('Y-m-c')) {
       echo '<div class="daymark">'.$start->setTimeZone($tz)->format('Y-m-d').' <span class="tz">'.$tzname.'</span></div>';
     }
+    $last_line_type = false;
+    $cluster = [];
     foreach($results as $line) {
       $num_lines++;
       $localdate = clone $line->date;
@@ -90,8 +92,21 @@ include('templates/header-bar.php');
       if($localdate->format('Y-m-d') != $lastday->format('Y-m-d')) {
         echo '<div class="daymark">'.$localdate->format('Y-m-d').' <span class="tz">'.$tzname.'</span></div>';
       }
-      echo format_line($channel, $line->date, $tz, $line->data);
+      $current = format_line($channel, $line->date, $tz, $line->data);
+      if($current['cluster'] && (!$last_line_type || $current['cluster'] == $last_line_type)) {
+        $cluster[] = $current;
+      } else {
+        if(count($cluster)) {
+          echo render_cluster($cluster);
+          $cluster = [];
+        }
+        echo $current['html'];
+      }
       $lastday = $localdate;
+      $last_line_type = $current['cluster'];
+    }
+    if(count($cluster)) {
+      echo render_cluster($cluster);
     }
     ?>
   </div>

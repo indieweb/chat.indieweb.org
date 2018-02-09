@@ -55,11 +55,16 @@ h2 {
     min-height: 22px;
     margin-bottom: 4px;
   }
-  .line.deleted {
-    display: none;
-  }
   .line .text span {
     word-wrap: break-word;
+  }
+  .join.cluster {
+    color: #bbb;
+    padding-left: 48px;
+  }
+  .deleted.cluster {
+    color: #bbb;
+    padding-left: 48px;
   }
   .msg-join, .msg-join .text a, .msg-leave, .msg-leave a {
     color: #bbb;

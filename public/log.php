@@ -22,7 +22,7 @@ $local_channel = Config::irc_channel_to_local_channel($params['channel']['name']
 loadUsers($local_channel);
 
 $tz = new DateTimeZone('UTC');
-$html = format_line($local_channel, $date, $tz, json_decode($input));
+$html = format_line($local_channel, $date, $tz, json_decode($input))['html'];
 
 if($params['channel']['name'] !== '#indieweb-chat') {
 

@@ -121,13 +121,15 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
         if(!in_array($line['type'], ['join','leave']) && !$deleted)
           echo '<span class="nick' . ($mf ? ' p-author h-card' : '') . '">' . $who . '</span> ';
 
-        echo '<span class="' . ($mf ? 'e-content p-name' : '') . '">';
-          if(!in_array($line['type'], ['join','leave'])) {
-            echo filterText($line['content'], $channel);
-          } else {
-            echo $nick . ' ' . ($line['type'] == 'join' ? 'joined' : 'left') . ' the channel';
-          }
-        echo '</span>';
+        if(!$deleted) {
+          echo '<span class="' . ($mf ? 'e-content p-name' : '') . '">';
+            if(!in_array($line['type'], ['join','leave'])) {
+              echo filterText($line['content'], $channel);
+            } else {
+              echo $nick . ' ' . ($line['type'] == 'join' ? 'joined' : 'left') . ' the channel';
+            }
+          echo '</span>';
+        }
       echo '</span>';
       
       if($line['type'] == 'twitter' && $permalink) {
@@ -143,6 +145,41 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
     
   echo "</div>\n\n";
 
+  $cluster = false;
+  if(in_array($line['type'], ['join','leave'])) $cluster = 'join';
+  if($deleted) $cluster = 'deleted';
+
+  return [
+    'type' => $deleted ? 'deleted' : $line['type'],
+    'cluster' => $cluster,
+    'html' => ob_get_clean(),
+    'nick' => $nick,
+    'url' => $url
+  ];
+}
+
+function render_cluster($cluster) {
+  ob_start();
+  if($cluster[0]['type'] == 'deleted') {
+    echo '<div class="line deleted cluster">['.count($cluster).' line'.(count($cluster)>1?'s':'').' deleted]</div>';
+  } else {
+    $groups = ['join'=>[], 'leave'=>[]];
+    foreach($cluster as $c) {
+      $groups[$c['type']][] = $c['nick'];
+    }
+    echo '<div class="line join cluster">';
+      $cluster_line = [];
+      if(count($groups['join'])) {
+        $groups['join'] = array_unique($groups['join']);
+        $cluster_line[] = join_with_and($groups['join']).' joined the channel';
+      }
+      if(count($groups['leave'])) {
+        $groups['leave'] = array_unique($groups['leave']);
+        $cluster_line[] = join_with_and($groups['leave']).' left the channel';
+      }
+      echo implode('; ', $cluster_line);
+    echo '</div>';
+  }
   return ob_get_clean();
 }
 

@@ -173,6 +173,13 @@ function refreshUsers() {
   }
 }
 
+function join_with_and($array) {
+  if(count($array) == 0) return '';
+  if(count($array) == 1) return $array[0];
+  $last = array_pop($array);
+  return implode(', ', $array).' and '.$last;
+}
+
 /**
  * Generate file that contains the date with the first message
  * in each channel

@@ -69,7 +69,7 @@ include('templates/header-bar.php');
   <div class="logs">
     <div id="log-lines" class="featured">
       <div class="daymark"><?= $localdate->format('Y-m-d') ?> <span class="tz"><?= $tzname ?></span></div>
-      <?= format_line($channel, $date, $tz, $line->data) ?>
+      <?= format_line($channel, $date, $tz, $line->data)['html'] ?>
     </div>
   </div>
 </main>
