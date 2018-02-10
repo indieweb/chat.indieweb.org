@@ -122,10 +122,10 @@ h2 {
   }
   
   .logs {
-    padding: 4px 10px 16px 10px;
+    padding: 4px 10px 30px 10px;
   }
   .logs.active-chat {
-    padding-bottom: 50px;
+    padding-bottom: 120px;
   }
   
   .hilite .in {

@@ -112,6 +112,7 @@ document.getElementById('close_notice_btn').addEventListener('click', function()
   join_btn.addEventListener('click', function(){
     document.getElementById('join_prompt').classList.add('hidden');
     document.getElementById('signin').classList.remove('hidden');
+    document.querySelector('.logs').classList.add('active-chat');
     if(get_nick_from_cookie()) {
       nick_field.value = get_nick_from_cookie();
     }
