@@ -108,6 +108,7 @@ include('templates/header-bar.php');
     }
     ?>
   </div>
+  <span id="bottom"></span>
 </div>
 
 <?php if(!isset($tomorrow) || !$tomorrow): /* Set the channel name to activate realtime streaming, only when viewing "today" */ ?>
