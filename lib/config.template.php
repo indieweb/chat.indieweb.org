@@ -109,7 +109,11 @@ class Config {
       case '#indieweb-chat':
         return 'freenode/#indieweb-chat';
       case '#dev':
-        return '#dev';
+        return 'freenode/#indieweb-dev';
+      case '#meta':
+        return 'freenode/#indieweb-meta';
+      case '#wordpress':
+        return 'freenode/#indieweb-wordpress';
       case '#bridgy':
         return 'freenode/#bridgy';
       case '#known':
