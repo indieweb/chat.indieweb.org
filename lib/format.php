@@ -1,6 +1,9 @@
 <?php
 
 function format_line($channel, $date, $tz, $input, $mf=true) {
+  if(!$input)
+    return;
+  
   ob_start();
 
   $nick = $input->author->nickname;
@@ -58,6 +61,10 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
     $line['type'] = 'twitter';
     $line['content'] = $match[2];
     $permalink = $match[3];
+    if(parse_url($permalink, PHP_URL_HOST) == 'twtr.io') {
+      $id = b60to10(parse_url($permalink, PHP_URL_PATH));
+      $permalink = 'https://twitter.com/_/status/'.$id;
+    }
     $avatar = '<div class="avatar"><img src="' . htmlspecialchars(ImageProxy::url('https://twitter.com/' . $match[1] . '/profile_image')) . '" width="20"/></div>';
     $who = $avatar . '<a href="https://twitter.com/' . $match[1] . '" class="author" target="_blank">@<span class="p-name p-nickname">' . $match[1] . '</span></a>';
   }
