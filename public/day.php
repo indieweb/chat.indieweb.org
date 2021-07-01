@@ -30,6 +30,13 @@ $date = clone $start;
 $end = new DateTime($_GET['date'].' 23:59:59', $utc);
 $end->setTimeZone($tz);
 
+# Return 404 for days in the future
+if($start->format('U') > time()) {
+  header('HTTP/1.1 404 Not Found');
+  die();
+}
+
+
 $start_utc = new DateTime($_GET['date'].' 00:00:00', $utc);
 $end_utc = new DateTime($_GET['date'].' 23:59:59', $utc);
 
@@ -57,7 +64,6 @@ if($start->format('U') < 1467615600 && $channelName == '#indieweb') $channelName
 
 $db = new Quartz\DB('data/'.Config::logpath_for_channel($channel), 'r');
 $results = $db->queryRange(clone $start_utc, clone $end_utc);
-
 
 ob_start();
 $num_lines = 0;
@@ -136,9 +142,5 @@ include('templates/header-bar.php');
 include('templates/footer.php');
 
 $output = ob_get_clean();
-
-if($num_lines == 0) {
-  header('HTTP/1.1 404 Not Found');
-}
 
 echo $output;
