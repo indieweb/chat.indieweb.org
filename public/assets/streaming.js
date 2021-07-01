@@ -21,7 +21,9 @@ pushstream.onmessage = function(data,id,channel) {
     // Format the timestamp in the display timezone
     var timestamp = line.querySelector("time").attributes['datetime'].value;
     var displayTime = moment(timestamp).utcOffset(document.getElementById('tz-offset').value).format("HH:mm");
-    line.querySelector("time a").innerText = displayTime;
+    if(line.querySelector("time a")) {
+      line.querySelector("time a").innerText = displayTime;
+    }
 
     document.getElementById('log-lines').appendChild(line.childNodes[0]);
     // Auto-scroll if the window is already scrolled to the bottom
