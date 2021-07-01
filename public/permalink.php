@@ -24,7 +24,12 @@ $channel_link = Config::base_url_for_channel('#'.$_GET['channel']);
 $timestamp = $_GET['timestamp'];
 
 
-$date = DateTime::createFromFormat('U.u', sprintf('%.06f',$timestamp/1000000));
+if(strlen($timestamp) == 13)
+  $query_timestamp = $timestamp / 1000;
+else
+  $query_timestamp = $timestamp / 1000000;
+  
+$date = DateTime::createFromFormat('U.u', sprintf('%.06f',$query_timestamp));
 $localdate = clone $date;
 $localdate->setTimeZone($tz);
 
