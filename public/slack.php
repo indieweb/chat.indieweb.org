@@ -45,8 +45,9 @@ if(!array_key_exists('email', $_POST)):
   <form action="/slack" method="post" class="pure-form">
     <label>Email:</label>
     <input type="email" name="email" placeholder="" />
-    <p><button type="submit" class="pure-button pure-button-primary">Join</button></p>
+    <p><button type="submit" class="pure-button pure-button-primary" style="font-size: 19px; padding: 3px 20px; border: 1px #ccc solid; border-radius: 3px;">Join</button></p>
   </form>
+  <p>Please note that all our public Slack channels are bridged to IRC and archived permanently on the web at <a href="https://chat.indieweb.org/">chat.indieweb.org</a>. All contributions to the IndieWeb chat and wiki are made under a CC0 license.</p>
   <?php
   die();
 endif;
@@ -64,6 +65,7 @@ $result = curl_exec($ch);
 ?>
   <h1>Check your email!</h1>
   <p>You should have an invitation in your inbox now!</p>
+  <p>Check your spam folder if you don't see it at first. The email will come from Slack.</p>
 
 <!--
 <?= $result ?>
