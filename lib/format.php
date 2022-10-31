@@ -18,7 +18,10 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
 
   if($user) {
     if(property_exists($user->properties, 'photo')) {
-      $avatar = '<div class="avatar"><img src="' . htmlspecialchars(ImageProxy::url($user->properties->photo[0])) . '" width="20" height="20" class="' . ($mf ? 'u-photo' : '') . '"/></div>';
+      $img = $user->properties->photo[0];
+      if(is_object($img) && property_exists($img, 'value'))
+        $img = $img->value;
+      $avatar = '<div class="avatar"><img src="' . htmlspecialchars(ImageProxy::url($img)) . '" width="20" height="20" class="' . ($mf ? 'u-photo' : '') . '"/></div>';
     }
     $who = $avatar . '<span class="">'
       . '<a href="' . @$user->properties->url[0] . '" class="author ' . ($mf ? 'p-nickname p-name u-url' : '') . '" target="_blank">' . $nick . '</a>'
@@ -200,7 +203,10 @@ function format_wiki_line($channel, $line, $match, $mf, $blank_avatar) {
 
   if($user) {
     if(property_exists($user->properties, 'photo')) {
-      $avatar = '<div class="avatar"><img src="' . htmlspecialchars($user->properties->photo[0]) . '" width="20" height="20" class="' . ($mf ? 'u-photo' : '') . '"/></div>';
+      $img = $user->properties->photo[0];
+      if(is_object($img) && property_exists($img, 'value'))
+        $img = $img->value;
+      $avatar = '<div class="avatar"><img src="' . htmlspecialchars($img) . '" width="20" height="20" class="' . ($mf ? 'u-photo' : '') . '"/></div>';
     } else {
       $avatar = $blank_avatar;
     }
