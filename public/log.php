@@ -50,6 +50,7 @@ if($params['channel']['name'] !== '#indieweb-chat') {
   $data['html'] = $html;
   $data['channel'] = $params['channel']['name'];
   $data['type'] = $params['type'];
+  $data['nick'] = $params['author']['nickname'];
   curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
   curl_exec($ch);
 
