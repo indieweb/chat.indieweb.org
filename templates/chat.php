@@ -1,6 +1,7 @@
 <div id="join_prompt">
   <button type="button" id="join_btn">Join the Chat</button>
-  (or join via <a href="https://indieweb.org/discuss">IRC, Matrix</a>, or <a href="https://chat.indieweb.org/slack">Slack</a>)
+  (or join via <a href="https://indieweb.org/discuss#Join_Discussions">Discord, IRC, Matrix</a>, 
+  or <a href="https://chat.indieweb.org/slack">Slack</a>)
 </div>
 
 <div id="signin" class="hidden">
