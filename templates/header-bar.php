@@ -60,21 +60,21 @@
   <nav>
     <div class="nav-wrapper">
       <a href="#" class="brand-logo"><?= $channelName ?></a>
-      <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+      <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons"><abbr title="menu">≡</abbr></i></a>
 
       <ul class="right">
         <li>
           <?php if(isset($yesterday) && $yesterday): ?>
-            <a href="./<?= $yesterday ?>" rel="prev">Prev</a>
+            <a href="./<?= $yesterday ?>" rel="prev"><abbr title="Previous">←</abbr></a>
           <?php else: ?>
-            <a class="disabled">Prev</a>
+            <a class="disabled"><abbr title="Previous">←</abbr></a>
           <?php endif; ?>
         </li>
         <li>
           <?php if(isset($tomorrow) && $tomorrow): ?>
-            <a href="./<?= $tomorrow ?>" rel="next">Next</a>
+            <a href="./<?= $tomorrow ?>" rel="next"><abbr title="Next">→</abbr></a>
           <?php else: ?>
-            <a class="disabled">Next</a>
+            <a class="disabled"><abbr title="Next">→</abbr></a>
           <?php endif; ?>
         </li>
       </ul>
