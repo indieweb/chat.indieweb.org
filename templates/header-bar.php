@@ -60,7 +60,7 @@
   <nav>
     <div class="nav-wrapper">
       <a href="#" class="brand-logo"><?= $channelName ?></a>
-      <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons"><abbr title="menu">≡</abbr></i></a>
+      <a href="#" data-activates="slide-out" class="button-collapse"><abbr title="menu">≡</abbr></a>
 
       <ul class="right">
         <li>
