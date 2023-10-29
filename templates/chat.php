@@ -1,19 +1,21 @@
 <div id="join_prompt">
   <button type="button" id="join_btn">Join the Chat</button>
-  (or join via <a href="https://indieweb.org/discuss#Join_Discussions">Discord, IRC, Matrix</a>, 
-  or <a href="https://chat.indieweb.org/slack">Slack</a>)
+  (or join via <a href="https://indieweb.org/discuss#Join_Discussions">Discord, IRC<!--, Matrix official bridge disabled --></a>, 
+  or <a href="https://chat.indieweb.org/slack">Slack</a>).
+  Any problems? Please file an 
+  <a href="https://github.com/indieweb/chat.indieweb.org/issues">issue on GitHub</a>.
 </div>
 
 <div id="signin" class="hidden">
-  enter nickname: <input type="text" id="nickname" autocomplete="off">
+  enter nickname: <input type="text" id="nickname" autocomplete="off" />
 </div>
 
 <div id="connection_status" class="hidden">
-  <input type="text" readonly="readonly" id="connection_status_field">
+  <input type="text" readonly="readonly" id="connection_status_field" />
 </div>
 
 <div id="chat" class="hidden">
-  <input type="text" id="message" autocomplete="off">
+  <input type="text" id="message" autocomplete="off" />
   <span id="notify_control" class="hidden">
     <button type="button" id="notify_btn">Enable Notifications</button>
   </span>
