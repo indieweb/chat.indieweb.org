@@ -2,6 +2,7 @@
 
 This is the source code for the chat logs at https://chat.indieweb.org
 
+Looking for the chat logs themselves? See: https://github.com/indieweb/indieweb-chat-archive
 
 ## Requirements
 
