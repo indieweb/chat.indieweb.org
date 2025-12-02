@@ -1,9 +1,13 @@
 <div id="join_prompt">
   <button type="button" id="join_btn">Join the Chat</button>
-  (or join via <a href="https://indieweb.org/discuss#Join_Discussions">Discord, IRC<!--, Matrix official bridge disabled --></a>, 
-  or <a href="https://chat.indieweb.org/slack">Slack</a>).
-  Any problems? Please file an 
-  <a href="https://github.com/indieweb/chat.indieweb.org/issues">issue on GitHub</a>.
+  Please read our 
+  <a href="https://indieweb.org/code-of-conduct">Code of Conduct</a> 
+  and 
+  <a href="https://indieweb.org/discuss">Discussion Guidelines</a> 
+  then join via <a href="https://indieweb.org/discuss#Join_Discussions">Discord, IRC<!--, Matrix official bridge disabled --></a>, 
+  or <a href="https://chat.indieweb.org/slack">Slack</a>. 
+  We use 
+  <a href="https://github.com/indieweb/chat.indieweb.org/issues">GitHub for issues</a>.
 </div>
 
 <div id="signin" class="hidden">
