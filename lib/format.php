@@ -132,7 +132,7 @@ function format_line($channel, $date, $tz, $input, $mf=true) {
           echo '<span class="nick' . ($mf ? ' p-author h-card' : '') . '">' . $who . '</span> ';
 
         if(!$deleted) {
-          echo '<span class="' . ($mf ? 'e-content p-name' : '') . '">';
+          echo '<span class="' . ($mf ? 'e-content' : '') . '">';
             if(!in_array($line['type'], ['join','leave'])) {
               echo filterText($line['content'], $channel);
             } else {
