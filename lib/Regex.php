@@ -114,7 +114,7 @@ class Regex_Twitter extends Regex
 
 class Regex_URL extends Regex
 {
-    public static $expression = '|(https?:\/\/[^\s]+(?<![\),]))|';
+    public static $expression = '|(https?:\/\/[^\s]+(?<![\),\.]))|';
     public static $replacement = '<a href="$1" target="_blank">$1</a>';
 
     /**
