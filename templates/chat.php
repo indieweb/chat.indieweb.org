@@ -61,6 +61,7 @@
 #message {
   font-size: 15px;
   width: 400px;
+  max-width: 95vw;
 }
 #irc_notice {
   position: absolute;
