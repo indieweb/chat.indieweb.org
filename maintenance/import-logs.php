@@ -42,7 +42,7 @@ $channels = [
   '#social' => [
     'path' => 'w3c/#social',
     'server' => 'w3c',
-  ]
+  ],
   '#microformats' => [
     'path' => 'freenode/#microformats',
     'server' => 'freenode',
